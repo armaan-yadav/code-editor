@@ -6,6 +6,7 @@ import { FaEyeSlash } from 'react-icons/fa';
 import { motion } from "framer-motion"
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const Form = ({ showLogin }) => {
     const {
         register,
@@ -13,12 +14,13 @@ const Form = ({ showLogin }) => {
         formState: { errors, isSubmitting },
     } = useForm();
     const [showPassword, setShowPassword] = useState(false);
-
+    const navigate = useNavigate()
     const handleFormSubmit = async (data) => {
         if (showLogin) {
             const res = await signIn(data.email, data.password)
             if (res.status == 200) {
-                (() => toast.success(`Good to see you again ${res.data.displayName ? `, ${res.data.displayName}!` : 'bro!'}`, { autoClose: 1500 }))();
+                (() => toast.success(`Good to see you again ${res.data.displayName ? `, ${res.data.displayName}!` : 'bro!'}`, { autoClose: 1500 }))(); navigate("/home")
+
             } else {
                 (() => toast.error("Invalid credentials broo!", { autoClose: 1500 }))();
             }
@@ -27,17 +29,16 @@ const Form = ({ showLogin }) => {
             const res = await signUp(data.name, data.email, data.password)
             if (res.status == 200) {
                 (() => toast.success(`Welcome to CodePencil ,${res.data.displayName}!`, { autoClose: 1500 }))();
+                navigate("/home")
             } else {
                 (() => toast.error("Email already in use!", { autoClose: 1500 }))();
             }
         }
-
-
     };
 
     return (
         <>
-            <ToastContainer />
+            <ToastContainer position='bottom-right' />
             <form
                 className="flex  flex-col gap-3"
                 onSubmit={handleSubmit(handleFormSubmit)}

@@ -7,9 +7,10 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import Sidebar from "../components/Sidebar";
+import { useSelector } from "react-redux";
 const Home = () => {
     const [isSideMenu, setIsSideMenu] = useState(false);
-    const [user, setUser] = useState();
+    const user = useSelector(state => state.user);
     return (
         <>
             <Sidebar isSideMenu={isSideMenu} setIsSideMenu={setIsSideMenu} />

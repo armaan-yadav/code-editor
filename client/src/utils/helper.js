@@ -2,9 +2,9 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
   signInWithRedirect,
+  signOut,
   updateCurrentUser,
   updateProfile,
 } from "firebase/auth";
@@ -31,7 +31,7 @@ export const signUp = async (name, email, password) => {
     .then((userCredentials) => {
       const user = userCredentials.user;
       user.displayName = name;
-      updateCurrentUser(auth, user);
+      updateProfile(user, { displayName: name });
       status = 200;
       data = user;
     })
@@ -56,4 +56,8 @@ export const signIn = async (email, password) => {
       console.log(error);
     });
   return { status, data };
+};
+
+export const signUserOut = async () => {
+  await signOut(auth).catch((e) => console.log(e));
 };
