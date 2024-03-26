@@ -5,44 +5,41 @@ import Auth from './_auth/Auth'
 import { auth, db } from './config/firebase.config'
 import { doc, setDoc } from 'firebase/firestore'
 import Spinner from './components/Spinner'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, } from 'react-redux'
 import { setUser } from './redux/userSlice/userSlice'
+import NewProject from './_pages/NewProject'
 
 const App = () => {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.user)
-  console.log(user)
+  const navigate = useNavigate()
   useEffect(() => {
+    setIsLoading(true)
     const unsubscribe = auth.onAuthStateChanged(userCred => {
-      console.log(userCred.providerData[0])
       if (userCred) {
         setDoc(doc(db, "users", userCred?.uid), userCred?.providerData?.[0]).then(e => {
-          setIsLoading(true)
           dispatch(setUser(userCred?.providerData?.[0]))
+          navigate("/home")
           setIsLoading(false)
         })
       }
-      // else {
-      //   navigate("/auth")
-      //   setIsLoading(false)
-      // }
+      else {
+        console.log("not logged in");
+        setIsLoading(false)
+      }
     })
-
-    //we can also use setInterval and call  the loading animation
 
     //cleanup funciton
     return () => unsubscribe();
   }, [])
-  return isLoading ? <div className='flex items-center justify-center h-screen w-screen '>
+  return isLoading ? <div className='flex items-center justify-center h-[100vh] w-screen '>
     <Spinner />
   </div> : (
-    <div className='w-screen h-screen flex items-start justify-start overflow-hidden'>
-
+    <div className='w-[100vw] h-[100vh] flex items-start justify-start overflow-hidden'>
       <Routes>
-        <Route path='/home/*' element={<Home />} />
+        <Route path='/home' element={<Home />} />
         <Route path='/auth' element={<Auth />} />
+        <Route path='/newProject' element={<NewProject />} />
 
         {/* set default path if no route matches */}
         <Route path='*' element={<Home />} />

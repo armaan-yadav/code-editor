@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import Form from "../components/Form";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
-import logo from "/assets/logo.webp";
+import logo from "/assets/logo.svg";
 import { signInWithGithub, signInWithGoogle } from "../utils/helper";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Auth = () => {
+    const navigate = useNavigate()
     const [showLogin, setShowLogin] = useState(false);
     return (
         <div className="h-screen w-screen text-white flex items-center justify-center flex-col gap-2 relative">
@@ -60,7 +61,7 @@ const Auth = () => {
                     Sign In with github
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

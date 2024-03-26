@@ -1,16 +1,25 @@
 import React from 'react'
-import { Vortex } from 'react-loader-spinner'
+import { Triangle, Vortex } from 'react-loader-spinner'
 
 const Spinner = () => {
     return (
-        <Vortex
+        // <Vortex
+        //     visible={true}
+        //     height="80"
+        //     width="80"
+        //     ariaLabel="vortex-loading"
+        //     wrapperStyle={{}}
+        //     wrapperClass="vortex-wrapper"
+        //     colors={['red', '#10B981', 'blue', 'yellow', 'orange', 'purple']}
+        // />
+        <Triangle
             visible={true}
             height="80"
             width="80"
-            ariaLabel="vortex-loading"
+            color="#4fa94d"
+            ariaLabel="triangle-loading"
             wrapperStyle={{}}
-            wrapperClass="vortex-wrapper"
-            colors={['red', '#10B981', 'blue', 'yellow', 'orange', 'purple']}
+            wrapperClass=""
         />
     )
 }

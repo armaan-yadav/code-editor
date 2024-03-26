@@ -1,25 +1,24 @@
 import React, { useState } from "react";
-import { HiChevronDoubleLeft } from "react-icons/hi";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import { MdHome } from "react-icons/md";
 import { motion } from "framer-motion";
-
 import { Link } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import Sidebar from "../components/Sidebar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import UserProfile from "../components/UserProfile";
 const Home = () => {
+    const dispatch = useDispatch()
     const [isSideMenu, setIsSideMenu] = useState(false);
-    const user = useSelector(state => state.user);
+    const user = useSelector(state => state.user.user);
+    const [showLogoutMenu, setShowLogoutMenu] = useState(false)
     return (
         <>
             <Sidebar isSideMenu={isSideMenu} setIsSideMenu={setIsSideMenu} />
             <div className=" flex-1 min-h-screen max-h-screen w-full h-full  overflow-y-scroll  flex items-start justify-start px-4 md:px-12 py-1 md:py-8 ">
-                <div className="w-full flex h-[46px] gap-2 bg-secondary ">
+                <div className="w-full flex h-[46px] gap-2 ">
                     <Searchbar />
                     {/* profile section */}
-                    <div className="h-full   rounded-md flex items-center justify-center">
-                        {!user ? (
+                    <div className="h-full   rounded-md flex items-center justify-center relative">
+                        {user == null ? (
                             <Link to={"/auth"} className="h-full">
                                 <motion.div
                                     whileTap={{ scale: 0.8 }}
@@ -29,15 +28,7 @@ const Home = () => {
                                 </motion.div>
                             </Link>
                         ) : (
-                            <>
-                                {" "}
-                                <img
-                                    src="https://media-cldnry.s-nbcnews.com/image/upload/t_focal-760x428,f_auto,q_auto:best/mpx/2704722219/2023_12/1702920776078_tdy_pop_8a_jones_brad_pitt_231218_1920x1080-o5zbmx.jpg"
-                                    alt="user-profile"
-                                    className="h-full w-[50px] object-cover rounded-md"
-                                />
-                                <RiArrowDropDownLine className="text-[40px] text-white" />
-                            </>
+                            <UserProfile setShowLogoutMenu={setShowLogoutMenu} showLogoutMenu={showLogoutMenu} />
                         )}
                     </div>
                 </div>

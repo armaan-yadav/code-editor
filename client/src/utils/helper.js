@@ -9,19 +9,24 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app, auth } from "../config/firebase.config";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 export const signInWithGoogle = async () => {
+
   await signInWithRedirect(auth, googleProvider).then((userCredentials) => {
     window.location.reload();
+    return 200;
   });
 };
 
 export const signInWithGithub = async () => {
+
   await signInWithRedirect(auth, githubProvider).then((userCredentials) => {
     window.location.reload();
+    return 200;
   });
 };
 

@@ -3,8 +3,66 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
   background: #131417;
   font-family: "Poppins", sans-serif;
+}
+
+div[data-attribute="vertical"][data-type="Resizer"] {
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 0.3;
+  width: 4px;
+  border-radius: 10px;
+  z-index: 2;
+  height: 100%;
+  border-right: none;
+  border-left: none;
+  transition: all 0.3s;
+}
+div[data-attribute="vertical"][data-type="Resizer"]:hover {
+  border-left: 3px solid rgba(255, 255, 255, 0.6);
+  border-right: 3px solid rgba(255, 255, 255, 0.6);
+}
+div[data-attribute="horizontal"][data-type="Resizer"] {
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 0.3;
+  height: 4px;
+  z-index: 2;
+  border-top: none;
+  border-bottom: none;
+  transition: all 0.3s;
+}
+div[data-attribute="horizontal"][data-type="Resizer"]:hover {
+  border-top: 5px solid rgba(255, 255, 255, 0.6);
+  border-bottom: 5px solid rgba(255, 255, 255, 0.6);
+}
+
+.cm-editor ::-webkit-scrollbar {
+  width: 8px;
+  right: 0;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  /* background: red; */
+}
+
+.cm-editor ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.cm-editor ::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.cm-editor ::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.ͼo {
+  @apply bg-secondary;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

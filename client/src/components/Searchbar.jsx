@@ -3,7 +3,7 @@ import { FaSearchengin } from 'react-icons/fa'
 
 const Searchbar = () => {
     return (
-        <div className="flex items-center w-full gap-1 px-2 text-white border-[1px] border-gray-300 rounded-lg ">
+        <div className="flex items-center w-full gap-1 px-2 text-white border-[1px] border-gray-300 rounded-lg bg-secondary">
             <FaSearchengin className="text-2xl text-white" />
             <input
                 type="text"
