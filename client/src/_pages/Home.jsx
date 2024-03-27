@@ -6,7 +6,7 @@ import Sidebar from "../components/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
 import UserProfile from "../components/UserProfile";
 const Home = () => {
-    const dispatch = useDispatch()
+
     const [isSideMenu, setIsSideMenu] = useState(false);
     const user = useSelector(state => state.user.user);
     const [showLogoutMenu, setShowLogoutMenu] = useState(false)
@@ -28,7 +28,7 @@ const Home = () => {
                                 </motion.div>
                             </Link>
                         ) : (
-                            <UserProfile setShowLogoutMenu={setShowLogoutMenu} showLogoutMenu={showLogoutMenu} />
+                            <UserProfile setShowLogoutMenu={setShowLogoutMenu} showLogoutMenu={showLogoutMenu} user={user} />
                         )}
                     </div>
                 </div>

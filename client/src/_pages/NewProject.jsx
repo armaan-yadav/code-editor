@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import SplitPane from 'react-split-pane';
 import { FaHtml5 } from "react-icons/fa";
 import { FaCss3Alt } from "react-icons/fa";
@@ -10,6 +10,9 @@ import { javascript } from '@codemirror/lang-javascript';
 import { html as HTML } from "@codemirror/lang-html"
 import { css as CSS } from "@codemirror/lang-css"
 import { color } from '@uiw/codemirror-extensions-color';
+import { HiChevronDoubleDown, } from 'react-icons/hi'
+import NewProjectHeader from '../components/NewProjectHeader';
+import { useSelector } from 'react-redux';
 const NewProject = () => {
   const [html, setHtml] = useState("")
   const [css, setCss] = useState(
@@ -21,16 +24,31 @@ const NewProject = () => {
   `)
   const [js, setJs] = useState("")
   const [result, setResult] = useState("")
+  const [hideOutput, setHideOutput] = useState(false)
+
+  useEffect(() => {
+    const combinedOutput = `
+    <html>
+    <head>
+    </head>
+    <style>
+    ${css}
+    </style>
+    <body>
+    ${html}
+    <script>${js}</script>
+    </body>
+    </html>`
+    setResult(combinedOutput)
+
+  }, [html, css, js])
   return (
     <div className='text-white w-full h-full
       flex flex-col items-start justify-start overflow-hidden'>
-      <div className='text-white  min-h-[66px] h-[66px]  w-full bg-red-400'>
-        header
-      </div>
-
+      <NewProjectHeader />
       <div className='max-w-full w-full h-full flex-1'>
         <SplitPane split="horizontal">
-          <SplitPane defaultSize={50} >
+          <SplitPane defaultSize={50} minSize={"200px"}>
             <SplitPane split='vertical' minSize={"300px"} defaultSize={"33%"}>
               <div className="h-full w-full px-[5px] flex flex-col ">
                 <div className='w-full flex items-center justify-between '>
@@ -84,7 +102,7 @@ const NewProject = () => {
                   </div>
                 </div>
                 <div className='w-full relative flex-1'>
-                  <CodeMirror extensions={[javascript({ jsx: true })]} theme={"dark"} height='100%' style={{ scrollbarColor: "green" }} className='absolute top-0 left-0 w-[100%] h-[100%] bg-black'
+                  <CodeMirror extensions={[javascript({ snippets: true })]} theme={"dark"} height='100%' style={{ scrollbarColor: "green" }} className='absolute top-0 left-0 w-[100%] h-[100%] bg-black'
                     onChange={(value, viewUpdate) => { setJs(value) }}
                     placeholder={"//hello"}
                     value={js}
@@ -92,12 +110,23 @@ const NewProject = () => {
                 </div>
               </div>
             </SplitPane>
-
           </SplitPane>
-          <SplitPane minSize={"50px"}></SplitPane>
+          <SplitPane minSize={"50px"}  >
+            <div className="h-full w-full bg-white p-2 relative">
+              <div
+                // whileTap={{ scale: 0.9 }}
+                className={`absolute text-white right-0 -top-6 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
+                onClick={() => setHideOutput(!hideOutput)}
+              >
+                <HiChevronDoubleDown
+                  className={`duration-300 ${hideOutput && "rotate-180"} duration-150`}
+                />
+              </div>
+              <iframe srcDoc={result} className='h-full w-full' />
+            </div>
+          </SplitPane>
         </SplitPane>
       </div>
-
     </div >
   )
 }

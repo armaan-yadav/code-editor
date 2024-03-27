@@ -6,23 +6,20 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import { motion } from "framer-motion"
 import { fadeInOut } from "../animatons/index"
 import defaultAvatar from "../../public/assets/defaultIAvatar.jpg"
-const UserProfile = ({ showLogoutMenu, setShowLogoutMenu }) => {
+const UserProfile = ({ showLogoutMenu, setShowLogoutMenu , user }) => {
     const dispatch = useDispatch()
-    const user = useSelector(state => state.user.user)
-
     return (
         <>
-
             <div className="flex h-full items-center justify-center gap-2 "
-
+                onMouseOver={_ => console.log("first")}
             >
                 <motion.img whileHover={{ scale: 1.2 }}
-                    src={user.photoURL ? user.photoURL : defaultAvatar}
+                    src={"https://lh3.googleusercontent.com/a/ACg8ocIiqM1hpg1P9qRQasRbzAjdVA4_O9i4cXYuVr4vqdDC=s96-c" }
                     alt="user-profile"
                     className="h-full w-[50px] object-cover rounded-md"
                 />
                 <RiArrowDropDownLine className={`text-[40px]  text-white ${showLogoutMenu && `rotate-180`} duration-200 bg-secondary rounded-lg`}
-                    onClick={() => setShowLogoutMenu(!showLogoutMenu)} />
+                    onClick={() => { setShowLogoutMenu(!showLogoutMenu) }} />
             </div>
             {showLogoutMenu &&
                 <motion.div
@@ -36,6 +33,7 @@ const UserProfile = ({ showLogoutMenu, setShowLogoutMenu }) => {
                             signUserOut();
                             dispatch(removeUser())
                         }}
+                        onMouseOver={_ => console.log("first")}
                     >Sign Out</button>
                 </motion.div>
             }

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { motion } from "framer-motion"
 import logo from "/assets/logo.svg";
 import { useSelector } from 'react-redux'
+import Anchor from './Anchor'
 const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
     const user = useSelector(state => state.user.user)
     // const { displayName } = user;
@@ -14,16 +15,7 @@ const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
                 } duration-300 px-3 py-6`}
         >
             {/* anchor for show/hide */}
-            <motion.div
-                whileTap={{ scale: 0.9 }}
-                className="absolute text-white -right-6 top-2 bg-secondary cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg"
-                onClick={() => setIsSideMenu(!isSideMenu)}
-            >
-                {" "}
-                <HiChevronDoubleLeft
-                    className={`${isSideMenu && `rotate-180`} duration-300`}
-                />
-            </motion.div>
+            <Anchor isSideMenu={isSideMenu} setIsSideMenu={setIsSideMenu} />
             {/* side-bar items */}
             <div className="overflow-hidden w-full flex flex-col gap-4">
                 <Link to={"/home"}>
