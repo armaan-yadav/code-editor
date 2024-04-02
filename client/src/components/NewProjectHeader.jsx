@@ -1,25 +1,99 @@
-import React, { useContext } from 'react'
-import logo from "/assets/logo.svg"
-import defaultAvatar from "/assets/defaultIAvatar.jpg"
-import { motion } from "framer-motion"
-import { FaChevronDown } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-const NewProjectHeader = () => {
-    const user = useSelector(state => state.user.user);
-    console.log(user)
-    return (
-        <div className='text-white  min-h-[66px] h-[66px]  w-full bg-secondary flex justify-between items-center px-3'>
-            <div>
-                <Link to={"/home"}>  <img src={logo} alt="" /></Link>
+import React, { useState } from "react";
+import logo from "/assets/logo.svg";
+import { AnimatePresence, motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { MdCheck, MdEdit } from "react-icons/md";
+import UserProfile from "./UserProfile";
+
+const NewProjectHeader = ({ title, setTitle, user, handleSave }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  return (
+    <header className="text-white  min-h-[66px] h-[66px]  w-full bg-secondary flex justify-between items-center px-3">
+      <div className="flex items-center ">
+        <Link to={"/"}>
+          {" "}
+          <img src={logo} alt="" />
+        </Link>
+        <div>
+          <div className="flex items-center justify-center gap-2">
+            <AnimatePresence>
+              {isEditing ? (
+                <>
+                  <motion.input
+                    key={"editTitle"}
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="bg-transparent  bg-red-200  outline-none w-fit"
+                    autoFocus={isEditing}
+                  />
+                </>
+              ) : (
+                <>
+                  <motion.p
+                    key={"showTitle"}
+                    onClick={() => setIsEditing(true)}
+                  >
+                    {title}
+                  </motion.p>
+                </>
+              )}
+              {isEditing ? (
+                <motion.div
+                  key={"MdCheck"}
+                  className="cursor-pointer"
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setIsEditing(false)}
+                >
+                  <MdCheck className="text-emerald-400" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={"MdEdit"}
+                  className="cursor-pointer"
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setIsEditing(true)}
+                >
+                  <MdEdit className="text-primaryText" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          {
+            <div className="flex items-center justify-center gap-2">
+              <p className="text-sm text-primaryText">
+                {user?.displayName?.stringValue
+                  ? user?.displayName.stringValue
+                    ? user?.displayName.stringValue
+                    : user?.email.stringValue.split("@")[0]
+                  : user?.displayName
+                  ? user?.displayName
+                  : user?.email.split("@")[0]}
+              </p>
+              <motion.p
+                whileTap={{ scale: 0.9 }}
+                className="text-[10px] bg-emerald-400 px-2.5 py-0.5 text-primary font-bold hover:text-white duration-200 cursor-pointer rounded-sm"
+              >
+                + Follow
+              </motion.p>
             </div>
-            <div className='flex gap-2 items-center'>
-                <div className='bg-emerald-400 text-primary font-[600] px-2 py-1 rounded-md hover:bg-emerald-500 duration-200 hover:text-white cursor-pointer'>SAVE</div>
-                <motion.img whileTap={{ scale: 0.9 }} src={user?.photoURL ? user.photoURL : defaultAvatar} alt="" className='h-[75pxpx] w-[50px] object-cover rounded-md cursor-pointer' />
-                <FaChevronDown className='bg-secondary h-full text-[1rem] text-white cursor-pointer' />
-            </div>
+          }
         </div>
-    )
-}
+      </div>
+      <div className="flex gap-2 items-center">
+        <motion.div
+          whileTap={{ scale: 0.9 }}
+          className="bg-emerald-400 text-primary font-[600] px-2 py-1 rounded-md hover:bg-emerald-500 duration-200 hover:text-white cursor-pointer"
+          onClick={() => {
+            handleSave();
+          }}
+        >
+          SAVE
+        </motion.div>
+        <UserProfile user={user} />
+      </div>
+    </header>
+  );
+};
 
 export default NewProjectHeader;

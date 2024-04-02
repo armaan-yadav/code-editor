@@ -3,18 +3,18 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import Searchbar from "../components/Searchbar";
 import Sidebar from "../components/Sidebar";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import UserProfile from "../components/UserProfile";
+import Projects from "../components/Projects";
 const Home = () => {
-
     const [isSideMenu, setIsSideMenu] = useState(false);
     const user = useSelector(state => state.user.user);
-    const [showLogoutMenu, setShowLogoutMenu] = useState(false)
+    const projects = useSelector(state => state.projects.projects)
     return (
         <>
             <Sidebar isSideMenu={isSideMenu} setIsSideMenu={setIsSideMenu} />
-            <div className=" flex-1 min-h-screen max-h-screen w-full h-full  overflow-y-scroll  flex items-start justify-start px-4 md:px-12 py-1 md:py-8 ">
-                <div className="w-full flex h-[46px] gap-2 ">
+            <div className=" flex-1 min-h-screen max-h-screen w-full h-full  gap-4 overflow-y-scroll  flex items-start justify-start  py-1 md:py-8 flex-col">
+                <div className="w-full flex h-[46px] gap-2 px-4 md:px-12">
                     <Searchbar />
                     {/* profile section */}
                     <div className="h-full   rounded-md flex items-center justify-center relative">
@@ -28,11 +28,13 @@ const Home = () => {
                                 </motion.div>
                             </Link>
                         ) : (
-                            <UserProfile setShowLogoutMenu={setShowLogoutMenu} showLogoutMenu={showLogoutMenu} user={user} />
+                            <UserProfile user={user} />
                         )}
                     </div>
                 </div>
+                <Projects projects={projects} />
             </div>
+
         </>
     );
 };

@@ -1,44 +1,76 @@
-import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { signUserOut } from '../utils/helper';
-import { removeUser } from '../redux/userSlice/userSlice';
-import { RiArrowDropDownLine } from 'react-icons/ri';
-import { motion } from "framer-motion"
-import { fadeInOut } from "../animatons/index"
-import defaultAvatar from "../../public/assets/defaultIAvatar.jpg"
-const UserProfile = ({ showLogoutMenu, setShowLogoutMenu , user }) => {
-    const dispatch = useDispatch()
-    return (
-        <>
-            <div className="flex h-full items-center justify-center gap-2 "
-                onMouseOver={_ => console.log("first")}
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { signUserOut } from "../utils/helper";
+import { removeUser } from "../redux/userSlice/userSlice";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { motion } from "framer-motion";
+import { fadeInOut } from "../animatons/index";
+import { Link } from "react-router-dom";
+const UserProfile = ({}) => {
+  const [showLogoutMenu, setShowLogoutMenu] = useState(false);
+  const user = useSelector((state) => state.user.user);
+  // console.log(user);
+  const dispatch = useDispatch();
+  const getFirstLetter = () => {
+    if (user?.displayName) return user.displayName[0];
+  };
+  return (
+    <>
+      <div className="flex h-full items-center justify-center gap-2 relative">
+        {user ? (
+          <motion.p
+            whileHover={{ scale: 1.2 }}
+            className="bg-primaryText text-primary w-[50px] h-full rounded-md flex items-center justify-center py-1.5 text-3xl"
+          >
+            {getFirstLetter()}
+          </motion.p>
+        ) : (
+          <Link to={"/auth"} className="h-full">
+            <motion.div
+              whileTap={{ scale: 0.8 }}
+              className="text-white bg-emerald-500 hover:bg-emerald-700 duration-200 px-3 h-full flex items-center rounded-md py-1.5"
             >
-                <motion.img whileHover={{ scale: 1.2 }}
-                    src={"https://lh3.googleusercontent.com/a/ACg8ocIiqM1hpg1P9qRQasRbzAjdVA4_O9i4cXYuVr4vqdDC=s96-c" }
-                    alt="user-profile"
-                    className="h-full w-[50px] object-cover rounded-md"
-                />
-                <RiArrowDropDownLine className={`text-[40px]  text-white ${showLogoutMenu && `rotate-180`} duration-200 bg-secondary rounded-lg`}
-                    onClick={() => { setShowLogoutMenu(!showLogoutMenu) }} />
-            </div>
-            {showLogoutMenu &&
-                <motion.div
-                    {...fadeInOut}
-                    className="absolute top-[120%] right-0 text-primaryText w-[150%] flex flex-col bg-secondary  gap-1.5 rounded-lg overflow-hidden py-1">
-                    <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">Projects</button>
-                    <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">Collections</button>
-                    <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">Profile</button>
-                    <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200 "
-                        onClick={() => {
-                            signUserOut();
-                            dispatch(removeUser())
-                        }}
-                        onMouseOver={_ => console.log("first")}
-                    >Sign Out</button>
-                </motion.div>
-            }
-        </>
-    )
-}
+              SignUp
+            </motion.div>
+          </Link>
+        )}
+        <RiArrowDropDownLine
+          className={`text-[40px]  text-white ${
+            showLogoutMenu && `rotate-180`
+          } duration-200 bg-secondary rounded-lg`}
+          onClick={() => {
+            setShowLogoutMenu(!showLogoutMenu);
+          }}
+        />
 
-export default UserProfile
+        {showLogoutMenu && (
+          <motion.div
+            {...fadeInOut}
+            className="absolute top-[100%] right-0 text-primaryText w-[150%] flex flex-col bg-secondary  gap-1.5 rounded-lg overflow-hidden py-1 z-[100]"
+          >
+            <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">
+              Projects
+            </button>
+            <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">
+              Collections
+            </button>
+            <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">
+              Profile
+            </button>
+            <button
+              className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200 "
+              onClick={() => {
+                signUserOut();
+                dispatch(removeUser());
+              }}
+            >
+              Sign Out
+            </button>
+          </motion.div>
+        )}
+      </div>
+    </>
+  );
+};
+
+export default UserProfile;
