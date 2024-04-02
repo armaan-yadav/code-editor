@@ -17,7 +17,6 @@ import { setUser } from "./redux/userSlice/userSlice";
 import NewProject from "./_pages/NewProject";
 import { ToastContainer } from "react-toastify";
 import { setProjects } from "./redux/userSlice/projectSlice";
-import { ProviderId } from "firebase/auth";
 import ProjectWithId from "./_pages/ProjectWithId";
 
 const App = () => {
