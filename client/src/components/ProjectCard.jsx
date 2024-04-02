@@ -1,11 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
-import defaultAvatar from "/assets/defaultIAvatar.jpg";
-import { Link } from "react-router-dom";
 const ProjectCard = ({ project, index }) => {
   const { owner } = project;
   return (
-    <motion.div className="h-[275px] md:w-[350px] w-full  flex flex-col relative z-40 group ">
+    <motion.div className="h-[275px] md:w-[350px] w-full  flex flex-col relative z-40 group gap-1">
       <div className="w-full h-[80%]  overflow-x-hidden rounded-md">
         <iframe
           className="h-full w-full object-cover"
@@ -28,8 +26,10 @@ const ProjectCard = ({ project, index }) => {
 
         <div className="flex flex-col text-white  flex-1">
           <p className="font-bold text-lg">{project.title}</p>
-          <p className="text-[13px] font-semibold">
-            {owner?.displayName ? owner.displayName : owner?.email}
+          <p className="text-[13px] font-semibold text-primaryText">
+            {owner?.displayName
+              ? owner.displayName
+              : owner?.email.split("@")[0]}
           </p>
         </div>
       </div>

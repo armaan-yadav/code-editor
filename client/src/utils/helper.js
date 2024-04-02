@@ -15,7 +15,6 @@ const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
 
 export const signInWithGoogle = async () => {
-
   await signInWithRedirect(auth, googleProvider).then((userCredentials) => {
     window.location.reload();
     return 200;
@@ -23,7 +22,6 @@ export const signInWithGoogle = async () => {
 };
 
 export const signInWithGithub = async () => {
-
   await signInWithRedirect(auth, githubProvider).then((userCredentials) => {
     window.location.reload();
     return 200;

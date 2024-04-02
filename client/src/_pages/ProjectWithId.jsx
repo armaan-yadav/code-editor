@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+  import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../config/firebase.config";
@@ -7,15 +7,14 @@ import Spinner from "../components/Spinner";
 const ProjectWithId = () => {
   const { id } = useParams();
   const [projectData, setProjectData] = useState();
-  const [projectUser, setProjectUser] = useState();
-  console.log(projectData);
+  const [owner, setowner] = useState();
   const getProject = async (id) => {
     const docRef = collection(db, "Projects");
     const docSnap = await getDocs(query(docRef, where("id", "==", id)));
     if (docSnap.docs) {
       setProjectData(docSnap.docs[0]._document.data.value.mapValue.fields);
-      setProjectUser(
-        docSnap.docs[0]._document.data.value.mapValue.fields.user.mapValue
+      setowner(
+        docSnap.docs[0]._document.data.value.mapValue.fields.owner.mapValue
           .fields
       );
     } else {
@@ -31,11 +30,7 @@ const ProjectWithId = () => {
     </div>
   ) : (
     <>
-      <NewProject
-        data={projectData}
-        editable={false}
-        projectUser={projectUser}
-      />
+      <NewProject data={projectData} owner={owner} />
     </>
   );
 };

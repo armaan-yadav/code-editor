@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "../components/Form";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import logo from "/assets/logo.svg";
 import { signInWithGithub, signInWithGoogle } from "../utils/helper";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Auth = () => {
   const [showLogin, setShowLogin] = useState(false);
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user.user);
+  useEffect(() => {
+    user && navigate("/");
+  }, [user]);
+
   return (
     <div className="h-screen w-screen text-white flex items-center justify-center flex-col gap-2 relative">
       <Link to={"/"}>
@@ -47,7 +54,7 @@ const Auth = () => {
         </p>
         <div
           className="w-full flex items-center gap-3 justify-center border-[1px] py-2 rounded-md my-2 border-gray-400 text-gray-400 hover:text-gray-200 duration-150 cursor-pointer"
-          onClick={() => {
+          onClick={async () => {
             signInWithGoogle();
           }}
         >

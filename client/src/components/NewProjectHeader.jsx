@@ -5,13 +5,21 @@ import { Link } from "react-router-dom";
 import { MdCheck, MdEdit } from "react-icons/md";
 import UserProfile from "./UserProfile";
 
-const NewProjectHeader = ({ title, setTitle, user, handleSave }) => {
+const NewProjectHeader = ({
+  title,
+  setTitle,
+  user,
+  handleSave,
+  owner,
+  updateProject,
+  sameOwner,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
+
   return (
     <header className="text-white  min-h-[66px] h-[66px]  w-full bg-secondary flex justify-between items-center px-3">
       <div className="flex items-center ">
         <Link to={"/"}>
-          {" "}
           <img src={logo} alt="" />
         </Link>
         <div>
@@ -62,35 +70,40 @@ const NewProjectHeader = ({ title, setTitle, user, handleSave }) => {
           {
             <div className="flex items-center justify-center gap-2">
               <p className="text-sm text-primaryText">
-                {user?.displayName?.stringValue
-                  ? user?.displayName.stringValue
-                    ? user?.displayName.stringValue
+                {owner?.displayName?.stringValue
+                  ? owner?.displayName.stringValue
+                    ? owner?.displayName.stringValue
                     : user?.email.stringValue.split("@")[0]
                   : user?.displayName
                   ? user?.displayName
                   : user?.email.split("@")[0]}
               </p>
-              <motion.p
-                whileTap={{ scale: 0.9 }}
-                className="text-[10px] bg-emerald-400 px-2.5 py-0.5 text-primary font-bold hover:text-white duration-200 cursor-pointer rounded-sm"
-              >
-                + Follow
-              </motion.p>
+              {!sameOwner && (
+                <motion.p
+                  whileTap={{ scale: 0.9 }}
+                  className="text-[10px] bg-emerald-400 px-2.5 py-0.5 text-primary font-bold hover:text-white duration-200 cursor-pointer rounded-sm"
+                >
+                  + Follow
+                </motion.p>
+              )}
             </div>
           }
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <motion.div
-          whileTap={{ scale: 0.9 }}
-          className="bg-emerald-400 text-primary font-[600] px-2 py-1 rounded-md hover:bg-emerald-500 duration-200 hover:text-white cursor-pointer"
-          onClick={() => {
-            handleSave();
-          }}
-        >
-          SAVE
-        </motion.div>
-        <UserProfile user={user} />
+        {(sameOwner || window.location.href.includes("newProject")) && (
+          <motion.div
+            whileTap={{ scale: 0.9 }}
+            className="bg-emerald-400 text-primary font-[600] px-2 py-1 rounded-md hover:bg-emerald-500 duration-200 hover:text-white cursor-pointer"
+            onClick={() => {
+              // handleSave();
+              updateProject();
+            }}
+          >
+            SAVE
+          </motion.div>
+        )}
+        <UserProfile />
       </div>
     </header>
   );

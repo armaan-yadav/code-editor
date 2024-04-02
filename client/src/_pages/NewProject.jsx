@@ -14,11 +14,30 @@ import { HiChevronDoubleDown } from "react-icons/hi";
 import NewProjectHeader from "../components/NewProjectHeader";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { db } from "../config/firebase.config";
 import { toast } from "react-toastify";
-const NewProject = ({ data, editable, projectUser }) => {
-  const [title, setTitle] = useState("Untitled");
+const NewProject = ({ data, owner }) => {
+  const user = useSelector((state) => state.user.user);
+  const [sameOwner, setSameOwner] = useState(
+    user?.uid == owner?.uid.stringValue
+  );
+  console.log(data);
+  const [title, setTitle] = useState(data?.title?.stringValue || "Untitled");
+  console.log(title);
+  const [js, setJs] = useState(
+    data?.js?.stringValue ? data?.js?.stringValue : ""
+  );
+  const [result, setResult] = useState(data?.result?.stringValue || "");
+  const [hideOutput, setHideOutput] = useState(false);
   const [html, setHtml] = useState(
     data?.html?.stringValue ? data.html.stringValue : ""
   );
@@ -32,13 +51,7 @@ const NewProject = ({ data, editable, projectUser }) => {
 }
   `
   );
-  // console.log(data);
-  const [js, setJs] = useState(
-    data?.js?.stringValue ? data?.js?.stringValue : ""
-  );
-  const [result, setResult] = useState(data?.result || "");
-  const [hideOutput, setHideOutput] = useState(false);
-  const user = useSelector((state) => state.user.user);
+
   useEffect(() => {
     const combinedOutput = `
     <html>
@@ -73,19 +86,42 @@ const NewProject = ({ data, editable, projectUser }) => {
       .catch((err) => console.log(err));
     console.log(temp);
   };
-  // console.log(projectUser);
-
-  console.log(projectUser);
+  const updateProject = async () => {
+    const id = data.id.stringValue;
+    const _updatedDoc = {
+      title,
+      html,
+      css,
+      js,
+      result,
+    };
+    try {
+      console.log(id);
+      const q = query(collection(db, "Projects"), where("id", "==", id));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (d) => {
+        const projectRef = doc(db, "Projects", d.id);
+        await updateDoc(projectRef, { ..._updatedDoc }).then((_) => {
+          toast.success("Project Updated Successfully!", { autoClose: 1500 });
+        });
+      });
+    } catch (error) {
+      console.error("Error updating documents: ", error);
+    }
+  };
   return (
     <div
       className="text-white w-full h-full
       flex flex-col items-start justify-start overflow-hidden"
     >
       <NewProjectHeader
-        title={data?.title?.stringValue ? data?.title?.stringValue : title}
+        title={title}
         setTitle={setTitle}
-        user={projectUser ? projectUser : user}
+        user={user}
+        owner={owner}
         handleSave={handleSave}
+        updateProject={updateProject}
+        sameOwner={sameOwner}
       />
       <div className="max-w-full w-full h-full flex-1">
         <SplitPane split="horizontal">
@@ -106,7 +142,7 @@ const NewProject = ({ data, editable, projectUser }) => {
                   <CodeMirror
                     extensions={[HTML({ matchClosingTags: true })]}
                     theme={"dark"}
-                    editable={editable}
+                    editable={sameOwner}
                     height="100%"
                     style={{ scrollbarColor: "green" }}
                     className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
@@ -134,7 +170,7 @@ const NewProject = ({ data, editable, projectUser }) => {
                   <CodeMirror
                     extensions={[CSS(), color]}
                     theme={"dark"}
-                    editable={editable}
+                    editable={sameOwner}
                     height="100%"
                     style={{ scrollbarColor: "green" }}
                     className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
@@ -162,7 +198,7 @@ const NewProject = ({ data, editable, projectUser }) => {
                   <CodeMirror
                     extensions={[javascript({ snippets: true })]}
                     theme={"dark"}
-                    editable={editable}
+                    editable={sameOwner}
                     height="100%"
                     style={{ scrollbarColor: "green" }}
                     className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
@@ -195,7 +231,7 @@ const NewProject = ({ data, editable, projectUser }) => {
             </SplitPane>
           ) : (
             <SplitPane minSize={"30px"}>
-              <div className="h-full w-full bg-white p-0.5 relative">
+              <div className="h-full w-full bg-white relative">
                 <motion.div
                   whileTap={{ scale: 0.9 }}
                   className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}

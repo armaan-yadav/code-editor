@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 const UserProfile = ({}) => {
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);
   const user = useSelector((state) => state.user.user);
-  // console.log(user);
   const dispatch = useDispatch();
   const getFirstLetter = () => {
     if (user?.displayName) return user.displayName[0];
