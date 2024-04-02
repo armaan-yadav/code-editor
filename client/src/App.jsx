@@ -21,6 +21,7 @@ import { ProviderId } from "firebase/auth";
 import ProjectWithId from "./_pages/ProjectWithId";
 
 const App = () => {
+  console.log("Hello");
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
