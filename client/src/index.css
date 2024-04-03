@@ -60,9 +60,3 @@ div[data-attribute="horizontal"][data-type="Resizer"]:hover {
 .ͼo {
   @apply bg-secondary;
 }
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
