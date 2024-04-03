@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import SplitPane from "react-split-pane";
 import { FaHtml5 } from "react-icons/fa";
 import { FaCss3Alt } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
@@ -124,129 +123,134 @@ const NewProject = ({ data, owner }) => {
         sameOwner={sameOwner}
       />
       <div className="max-w-full w-full h-full flex-1">
-        <SplitPane split="horizontal">
-          <SplitPane defaultSize={50} minSize={"200px"}>
-            <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
-              <div className="h-full w-full px-[5px] flex flex-col ">
-                <div className="w-full flex items-center justify-between ">
-                  <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                    <FaHtml5 className="text-red-400" />
-                    <p className="text-[13px]">HTML</p>
+        {/* <SplitPane split="horizontal">
+            <SplitPane defaultSize={50} minSize={"200px"}>
+              <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
+                <div className="h-full w-full px-[5px] flex flex-col ">
+                  <div className="w-full flex items-center justify-between ">
+                    <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                      <FaHtml5 className="text-red-400" />
+                      <p className="text-[13px]">HTML</p>
+                    </div>
+                    <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                      <IoIosSettings />
+                      <FaChevronDown />
+                    </div>
                   </div>
-                  <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                    <IoIosSettings />
-                    <FaChevronDown />
+                  <div className="w-full relative flex-1">
+                    <CodeMirror
+                      extensions={[HTML({ matchClosingTags: true })]}
+                      theme={"dark"}
+                      editable={sameOwner}
+                      height="100%"
+                      style={{ scrollbarColor: "green" }}
+                      className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                      onChange={(value, viewUpdate) => {
+                        setHtml(value);
+                      }}
+                      value={html}
+                    />
                   </div>
                 </div>
-                <div className="w-full relative flex-1">
-                  <CodeMirror
-                    extensions={[HTML({ matchClosingTags: true })]}
-                    theme={"dark"}
-                    editable={sameOwner}
-                    height="100%"
-                    style={{ scrollbarColor: "green" }}
-                    className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                    onChange={(value, viewUpdate) => {
-                      setHtml(value);
-                    }}
-                    value={html}
-                  />
+              </SplitPane>
+              <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
+                <div className="h-full w-full px-[5px] flex flex-col">
+                  <div className="w-full flex items-center justify-between ">
+                    <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                      <FaCss3Alt className="text-blue-400" />
+                      <p className="text-[13px]">CSS</p>
+                    </div>
+                    <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                      <IoIosSettings />
+                      <FaChevronDown />
+                    </div>
+                  </div>
+                  <div className="w-full relative flex-1">
+                    <CodeMirror
+                      extensions={[CSS(), color]}
+                      theme={"dark"}
+                      editable={sameOwner}
+                      height="100%"
+                      style={{ scrollbarColor: "green" }}
+                      className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                      onChange={(value, viewUpdate) => {
+                        setCss(value);
+                      }}
+                      value={css}
+                    />
+                  </div>
                 </div>
-              </div>
+              </SplitPane>
+              <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
+                <div className="h-full w-full px-[5px] flex flex-col">
+                  <div className="w-full flex items-center justify-between ">
+                    <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                      <DiJavascript className="text-yellow-400 " />
+                      <p className="text-[13px]">JS</p>
+                    </div>
+                    <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                      <IoIosSettings />
+                      <FaChevronDown />
+                    </div>
+                  </div>
+                  <div className="w-full relative flex-1">
+                    <CodeMirror
+                      extensions={[javascript({ snippets: true })]}
+                      theme={"dark"}
+                      editable={sameOwner}
+                      height="100%"
+                      style={{ scrollbarColor: "green" }}
+                      className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                      onChange={(value, viewUpdate) => {
+                        setJs(value);
+                      }}
+                      placeholder={"//hello"}
+                      value={js}
+                    />
+                  </div>
+                </div>
+              </SplitPane>
             </SplitPane>
-            <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
-              <div className="h-full w-full px-[5px] flex flex-col">
-                <div className="w-full flex items-center justify-between ">
-                  <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                    <FaCss3Alt className="text-blue-400" />
-                    <p className="text-[13px]">CSS</p>
-                  </div>
-                  <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                    <IoIosSettings />
-                    <FaChevronDown />
-                  </div>
+            {hideOutput ? (
+              <SplitPane minSize={"50px"} size={"30px"}>
+                <div className="h-full w-full bg-white p-2 relative">
+                  <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
+                    onClick={() => setHideOutput(!hideOutput)}
+                  >
+                    <HiChevronDoubleDown
+                      className={`duration-300 ${
+                        hideOutput && "rotate-180"
+                      } duration-150`}
+                    />
+                  </motion.div>
+                  <iframe srcDoc={result} className="h-full w-full" />
                 </div>
-                <div className="w-full relative flex-1">
-                  <CodeMirror
-                    extensions={[CSS(), color]}
-                    theme={"dark"}
-                    editable={sameOwner}
-                    height="100%"
-                    style={{ scrollbarColor: "green" }}
-                    className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                    onChange={(value, viewUpdate) => {
-                      setCss(value);
-                    }}
-                    value={css}
-                  />
+              </SplitPane>
+            ) : (
+              <SplitPane minSize={"30px"}>
+                <div className="h-full w-full bg-white relative">
+                  <motion.div
+                    whileTap={{ scale: 0.9 }}
+                    className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
+                    onClick={() => setHideOutput(!hideOutput)}
+                  >
+                    <HiChevronDoubleDown
+                      className={`duration-300 ${
+                        hideOutput && "rotate-180"
+                      } duration-150`}
+                    />
+                  </motion.div>
+                  <iframe srcDoc={result} className="h-full w-full" />
                 </div>
-              </div>
-            </SplitPane>
-            <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
-              <div className="h-full w-full px-[5px] flex flex-col">
-                <div className="w-full flex items-center justify-between ">
-                  <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                    <DiJavascript className="text-yellow-400 " />
-                    <p className="text-[13px]">JS</p>
-                  </div>
-                  <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                    <IoIosSettings />
-                    <FaChevronDown />
-                  </div>
-                </div>
-                <div className="w-full relative flex-1">
-                  <CodeMirror
-                    extensions={[javascript({ snippets: true })]}
-                    theme={"dark"}
-                    editable={sameOwner}
-                    height="100%"
-                    style={{ scrollbarColor: "green" }}
-                    className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                    onChange={(value, viewUpdate) => {
-                      setJs(value);
-                    }}
-                    placeholder={"//hello"}
-                    value={js}
-                  />
-                </div>
-              </div>
-            </SplitPane>
-          </SplitPane>
-          {hideOutput ? (
-            <SplitPane minSize={"50px"} size={"30px"}>
-              <div className="h-full w-full bg-white p-2 relative">
-                <motion.div
-                  whileTap={{ scale: 0.9 }}
-                  className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
-                  onClick={() => setHideOutput(!hideOutput)}
-                >
-                  <HiChevronDoubleDown
-                    className={`duration-300 ${
-                      hideOutput && "rotate-180"
-                    } duration-150`}
-                  />
-                </motion.div>
-                <iframe srcDoc={result} className="h-full w-full" />
-              </div>
-            </SplitPane>
-          ) : (
-            <SplitPane minSize={"30px"}>
-              <div className="h-full w-full bg-white relative">
-                <motion.div
-                  whileTap={{ scale: 0.9 }}
-                  className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
-                  onClick={() => setHideOutput(!hideOutput)}
-                >
-                  <HiChevronDoubleDown
-                    className={`duration-300 ${
-                      hideOutput && "rotate-180"
-                    } duration-150`}
-                  />
-                </motion.div>
-                <iframe srcDoc={result} className="h-full w-full" />
-              </div>
-            </SplitPane>
-          )}
+              </SplitPane>
+            )}
+          </SplitPane> */}
+        <SplitPane split="horizontal" className="bg-red-400">
+          <div></div>
+          <div></div>
+          <div></div>
         </SplitPane>
       </div>
     </div>
