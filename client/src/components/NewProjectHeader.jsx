@@ -96,8 +96,9 @@ const NewProjectHeader = ({
             whileTap={{ scale: 0.9 }}
             className="bg-emerald-400 text-primary font-[600] px-2 py-1 rounded-md hover:bg-emerald-500 duration-200 hover:text-white cursor-pointer"
             onClick={() => {
-              // handleSave();
-              updateProject();
+              window.location.href.includes("newProject")
+                ? handleSave()
+                : updateProject();
             }}
           >
             SAVE

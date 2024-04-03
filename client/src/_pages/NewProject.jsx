@@ -13,6 +13,7 @@ import { HiChevronDoubleDown } from "react-icons/hi";
 import NewProjectHeader from "../components/NewProjectHeader";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import Split from "react-split";
 import {
   addDoc,
   collection,
@@ -29,9 +30,7 @@ const NewProject = ({ data, owner }) => {
   const [sameOwner, setSameOwner] = useState(
     user?.uid == owner?.uid.stringValue
   );
-  console.log(data);
   const [title, setTitle] = useState(data?.title?.stringValue || "Untitled");
-  console.log(title);
   const [js, setJs] = useState(
     data?.js?.stringValue ? data?.js?.stringValue : ""
   );
@@ -50,6 +49,9 @@ const NewProject = ({ data, owner }) => {
 }
   `
   );
+  useEffect(() => {
+    window.location.href.includes("newProject") && setSameOwner(true);
+  });
 
   useEffect(() => {
     const combinedOutput = `
@@ -86,7 +88,7 @@ const NewProject = ({ data, owner }) => {
     console.log(temp);
   };
   const updateProject = async () => {
-    const id = data.id.stringValue;
+    const id = data?.id?.stringValue;
     const _updatedDoc = {
       title,
       html,
@@ -122,139 +124,157 @@ const NewProject = ({ data, owner }) => {
         updateProject={updateProject}
         sameOwner={sameOwner}
       />
-      <div className="max-w-full w-full h-full flex-1">
-        {/* <SplitPane split="horizontal">
-            <SplitPane defaultSize={50} minSize={"200px"}>
-              <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
-                <div className="h-full w-full px-[5px] flex flex-col ">
-                  <div className="w-full flex items-center justify-between ">
-                    <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                      <FaHtml5 className="text-red-400" />
-                      <p className="text-[13px]">HTML</p>
-                    </div>
-                    <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                      <IoIosSettings />
-                      <FaChevronDown />
-                    </div>
-                  </div>
-                  <div className="w-full relative flex-1">
-                    <CodeMirror
-                      extensions={[HTML({ matchClosingTags: true })]}
-                      theme={"dark"}
-                      editable={sameOwner}
-                      height="100%"
-                      style={{ scrollbarColor: "green" }}
-                      className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                      onChange={(value, viewUpdate) => {
-                        setHtml(value);
-                      }}
-                      value={html}
-                    />
-                  </div>
-                </div>
-              </SplitPane>
-              <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
-                <div className="h-full w-full px-[5px] flex flex-col">
-                  <div className="w-full flex items-center justify-between ">
-                    <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                      <FaCss3Alt className="text-blue-400" />
-                      <p className="text-[13px]">CSS</p>
-                    </div>
-                    <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                      <IoIosSettings />
-                      <FaChevronDown />
-                    </div>
-                  </div>
-                  <div className="w-full relative flex-1">
-                    <CodeMirror
-                      extensions={[CSS(), color]}
-                      theme={"dark"}
-                      editable={sameOwner}
-                      height="100%"
-                      style={{ scrollbarColor: "green" }}
-                      className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                      onChange={(value, viewUpdate) => {
-                        setCss(value);
-                      }}
-                      value={css}
-                    />
-                  </div>
-                </div>
-              </SplitPane>
-              <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
-                <div className="h-full w-full px-[5px] flex flex-col">
-                  <div className="w-full flex items-center justify-between ">
-                    <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                      <DiJavascript className="text-yellow-400 " />
-                      <p className="text-[13px]">JS</p>
-                    </div>
-                    <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                      <IoIosSettings />
-                      <FaChevronDown />
-                    </div>
-                  </div>
-                  <div className="w-full relative flex-1">
-                    <CodeMirror
-                      extensions={[javascript({ snippets: true })]}
-                      theme={"dark"}
-                      editable={sameOwner}
-                      height="100%"
-                      style={{ scrollbarColor: "green" }}
-                      className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                      onChange={(value, viewUpdate) => {
-                        setJs(value);
-                      }}
-                      placeholder={"//hello"}
-                      value={js}
-                    />
-                  </div>
-                </div>
-              </SplitPane>
-            </SplitPane>
-            {hideOutput ? (
-              <SplitPane minSize={"50px"} size={"30px"}>
-                <div className="h-full w-full bg-white p-2 relative">
-                  <motion.div
-                    whileTap={{ scale: 0.9 }}
-                    className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
-                    onClick={() => setHideOutput(!hideOutput)}
-                  >
-                    <HiChevronDoubleDown
-                      className={`duration-300 ${
-                        hideOutput && "rotate-180"
-                      } duration-150`}
-                    />
-                  </motion.div>
-                  <iframe srcDoc={result} className="h-full w-full" />
-                </div>
-              </SplitPane>
-            ) : (
-              <SplitPane minSize={"30px"}>
-                <div className="h-full w-full bg-white relative">
-                  <motion.div
-                    whileTap={{ scale: 0.9 }}
-                    className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
-                    onClick={() => setHideOutput(!hideOutput)}
-                  >
-                    <HiChevronDoubleDown
-                      className={`duration-300 ${
-                        hideOutput && "rotate-180"
-                      } duration-150`}
-                    />
-                  </motion.div>
-                  <iframe srcDoc={result} className="h-full w-full" />
-                </div>
-              </SplitPane>
-            )}
-          </SplitPane> */}
-        <SplitPane split="horizontal" className="bg-red-400">
-          <div></div>
-          <div></div>
-          <div></div>
-        </SplitPane>
-      </div>
+
+      <Split className="w-full  h-full flex flex-col " direction="vertical" minSize={0}>
+        <Split className="split  h-full w-[100vw] flex-1 " minSize={100}>
+          <div className="h-full w-full px-[5px] flex flex-col ">
+            <div className="w-full flex items-center justify-between ">
+              <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                <FaHtml5 className="text-red-400" />
+                <p className="text-[13px]">HTML</p>
+              </div>
+              <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                <IoIosSettings />
+                <FaChevronDown />
+              </div>
+            </div>
+            <div className="w-full relative flex-1">
+              <CodeMirror
+                extensions={[HTML({ matchClosingTags: true })]}
+                theme={"dark"}
+                editable={sameOwner}
+                height="100%"
+                style={{ scrollbarColor: "green" }}
+                className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                onChange={(value, viewUpdate) => {
+                  setHtml(value);
+                }}
+                value={html}
+              />
+            </div>
+          </div>
+          <div className="h-full w-full px-[5px] flex flex-col">
+            <div className="w-full flex items-center justify-between ">
+              <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                <FaCss3Alt className="text-blue-400" />
+                <p className="text-[13px]">CSS</p>
+              </div>
+              <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                <IoIosSettings />
+                <FaChevronDown />
+              </div>
+            </div>
+            <div className="w-full relative flex-1">
+              <CodeMirror
+                extensions={[CSS(), color]}
+                theme={"dark"}
+                editable={sameOwner}
+                height="100%"
+                style={{ scrollbarColor: "green" }}
+                className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                onChange={(value, viewUpdate) => {
+                  setCss(value);
+                }}
+                value={css}
+              />
+            </div>
+          </div>
+          <div className="h-full w-full px-[5px] flex flex-col">
+            <div className="w-full flex items-center justify-between ">
+              <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                <DiJavascript className="text-yellow-400 " />
+                <p className="text-[13px]">JS</p>
+              </div>
+              <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                <IoIosSettings />
+                <FaChevronDown />
+              </div>
+            </div>
+            <div className="w-full relative flex-1">
+              <CodeMirror
+                extensions={[javascript({ snippets: true })]}
+                theme={"dark"}
+                editable={sameOwner}
+                height="100%"
+                style={{ scrollbarColor: "green" }}
+                className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                onChange={(value, viewUpdate) => {
+                  setJs(value);
+                }}
+                placeholder={"//hello"}
+                value={js}
+              />
+            </div>
+          </div>
+        </Split>
+        <motion.div className={`max-h-${hideOutput ? `[100px]` : `full`} w-full  relative bg-white duration-300`}>
+          <motion.div
+            whileTap={{ scale: 0.9 }}
+            className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
+            onClick={() => setHideOutput(!hideOutput)}
+          >
+            <HiChevronDoubleDown
+              className={`duration-300 ${
+                hideOutput && "rotate-180"
+              } duration-150`}
+            />
+          </motion.div>
+          <iframe srcDoc={result} className="h-full w-full" />
+        </motion.div>
+      </Split>
     </div>
   );
 };
 
 export default NewProject;
+
+/**
+ *     <div className="max-w-full w-full h-full flex-1">
+          {/* <SplitPane split="horizontal">
+              <SplitPane defaultSize={50} minSize={"200px"}>
+
+                <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
+
+                </SplitPane>
+                <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
+
+                </SplitPane>
+              </SplitPane>
+              {hideOutput ? (
+                <SplitPane minSize={"50px"} size={"30px"}>
+                  <div className="h-full w-full bg-white p-2 relative">
+                    <motion.div
+                      whileTap={{ scale: 0.9 }}
+                      className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
+                      onClick={() => setHideOutput(!hideOutput)}
+                    >
+                      <HiChevronDoubleDown
+                        className={`duration-300 ${
+                          hideOutput && "rotate-180"
+                        } duration-150`}
+                      />
+                    </motion.div>
+                    <iframe srcDoc={result} className="h-full w-full" />
+                  </div>
+                </SplitPane>
+              ) : (
+                <SplitPane minSize={"30px"}>
+                  <div className="h-full w-full bg-white relative">
+                    <motion.div
+                      whileTap={{ scale: 0.9 }}
+                      className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
+                      onClick={() => setHideOutput(!hideOutput)}
+                    >
+                      <HiChevronDoubleDown
+                        className={`duration-300 ${
+                          hideOutput && "rotate-180"
+                        } duration-150`}
+                      />
+                    </motion.div>
+                    <iframe srcDoc={result} className="h-full w-full" />
+                  </div>
+                </SplitPane>
+              )}
+            </SplitPane>
+            </div>
+ */
