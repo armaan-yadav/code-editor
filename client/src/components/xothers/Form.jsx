@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
-import { signIn, signUp } from '../utils/helper';
+import { signIn, signUp } from '../../utils/helper';
 import { IoEyeSharp } from 'react-icons/io5';
 import { FaEyeSlash } from 'react-icons/fa';
 import { motion } from "framer-motion"

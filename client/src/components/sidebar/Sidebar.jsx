@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import logo from "/assets/logo.svg";
 import { useSelector } from "react-redux";
-import Anchor from "./Anchor";
+import Anchor from "../xothers/Anchor";
 const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
   const user = useSelector((state) => state.user.user);
   // const { displayName } = user;

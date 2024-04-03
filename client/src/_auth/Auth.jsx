@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Form from "../components/Form";
+import Form from "../components/xothers/Form";
 import { FaGithub } from "react-icons/fa";
 import { FaGoogle } from "react-icons/fa";
 import logo from "/assets/logo.svg";

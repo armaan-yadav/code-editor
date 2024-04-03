@@ -11,7 +11,7 @@ import {
   query,
   setDoc,
 } from "firebase/firestore";
-import Spinner from "./components/Spinner";
+import Spinner from "./components/xothers/Spinner";
 import { useDispatch } from "react-redux";
 import { setUser } from "./redux/userSlice/userSlice";
 import NewProject from "./_pages/NewProject";

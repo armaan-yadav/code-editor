@@ -10,10 +10,11 @@ import { html as HTML } from "@codemirror/lang-html";
 import { css as CSS } from "@codemirror/lang-css";
 import { color } from "@uiw/codemirror-extensions-color";
 import { HiChevronDoubleDown } from "react-icons/hi";
-import NewProjectHeader from "../components/NewProjectHeader";
+import NewProjectHeader from "../components/headers/newProjectHeader/NewProjectHeader";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import Split from "react-split";
+import { LuExpand } from "react-icons/lu";
 import {
   addDoc,
   collection,
@@ -25,17 +26,19 @@ import {
 } from "firebase/firestore";
 import { db } from "../config/firebase.config";
 import { toast } from "react-toastify";
+import ConsoleOutput from "../components/output/ConsoleOutput";
 const NewProject = ({ data, owner }) => {
+  const [hideOutput, setHideOutput] = useState(false);
+  const [hideConsoleOutput, setHideConsoleOutput] = useState(true);
   const user = useSelector((state) => state.user.user);
   const [sameOwner, setSameOwner] = useState(
     user?.uid == owner?.uid.stringValue
   );
   const [title, setTitle] = useState(data?.title?.stringValue || "Untitled");
   const [js, setJs] = useState(
-    data?.js?.stringValue ? data?.js?.stringValue : ""
+    data?.js?.stringValue ? data?.js?.stringValue : `console.log("hey")`
   );
   const [result, setResult] = useState(data?.result?.stringValue || "");
-  const [hideOutput, setHideOutput] = useState(false);
   const [html, setHtml] = useState(
     data?.html?.stringValue ? data.html.stringValue : ""
   );
@@ -111,170 +114,140 @@ const NewProject = ({ data, owner }) => {
     }
   };
   return (
-    <div
-      className="text-white w-full h-full
+    <>
+      <div
+        className="text-white w-full h-full
       flex flex-col items-start justify-start overflow-hidden"
-    >
-      <NewProjectHeader
-        title={title}
-        setTitle={setTitle}
-        user={user}
-        owner={owner}
-        handleSave={handleSave}
-        updateProject={updateProject}
-        sameOwner={sameOwner}
-      />
+      >
+        <NewProjectHeader
+          title={title}
+          setTitle={setTitle}
+          user={user}
+          owner={owner}
+          handleSave={handleSave}
+          updateProject={updateProject}
+          sameOwner={sameOwner}
+        />
 
-      <Split className="w-full  h-full flex flex-col " direction="vertical" minSize={0}>
-        <Split className="split  h-full w-[100vw] flex-1 " minSize={100}>
-          <div className="h-full w-full px-[5px] flex flex-col ">
-            <div className="w-full flex items-center justify-between ">
-              <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                <FaHtml5 className="text-red-400" />
-                <p className="text-[13px]">HTML</p>
+        <Split className="w-full  h-full flex flex-col " direction="vertical">
+          <Split className="split  h-full w-[100vw] flex-1 " minSize={300}>
+            <div className="h-full w-full px-[5px] flex flex-col ">
+              <div className="w-full flex items-center justify-between ">
+                <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                  <FaHtml5 className="text-red-400" />
+                  <p className="text-[13px]">HTML</p>
+                </div>
+                <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                  <LuExpand />
+                  <IoIosSettings />
+                  <FaChevronDown />
+                </div>
               </div>
-              <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                <IoIosSettings />
-                <FaChevronDown />
+              <div className="w-full relative flex-1">
+                <CodeMirror
+                  extensions={[HTML({ matchClosingTags: true })]}
+                  theme={"dark"}
+                  editable={sameOwner}
+                  height="100%"
+                  style={{ scrollbarColor: "green" }}
+                  className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                  onChange={(value, viewUpdate) => {
+                    setHtml(value);
+                  }}
+                  value={html}
+                />
               </div>
             </div>
-            <div className="w-full relative flex-1">
-              <CodeMirror
-                extensions={[HTML({ matchClosingTags: true })]}
-                theme={"dark"}
-                editable={sameOwner}
-                height="100%"
-                style={{ scrollbarColor: "green" }}
-                className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                onChange={(value, viewUpdate) => {
-                  setHtml(value);
-                }}
-                value={html}
+            <div className="h-full w-full px-[5px] flex flex-col">
+              <div className="w-full flex items-center justify-between ">
+                <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                  <FaCss3Alt className="text-blue-400" />
+                  <p className="text-[13px]">CSS</p>
+                </div>
+                <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                  <LuExpand />
+                  <IoIosSettings />
+                  <FaChevronDown />
+                </div>
+              </div>
+              <div className="w-full relative flex-1">
+                <CodeMirror
+                  extensions={[CSS(), color]}
+                  theme={"dark"}
+                  editable={sameOwner}
+                  height="100%"
+                  style={{ scrollbarColor: "green" }}
+                  className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                  onChange={(value, viewUpdate) => {
+                    setCss(value);
+                  }}
+                  value={css}
+                />
+              </div>
+            </div>
+            <div className="h-full w-full px-[5px] flex flex-col">
+              <div className="w-full flex items-center justify-between ">
+                <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
+                  <DiJavascript className="text-yellow-400 " />
+                  <p className="text-[13px]">JS</p>
+                </div>
+                <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
+                  <LuExpand />
+                  <IoIosSettings />
+                  <FaChevronDown />
+                </div>
+              </div>
+              <div className="w-full relative flex-1">
+                <CodeMirror
+                  extensions={[javascript({ snippets: true })]}
+                  theme={"dark"}
+                  editable={sameOwner}
+                  height="100%"
+                  style={{ scrollbarColor: "green" }}
+                  className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
+                  onChange={(value, viewUpdate) => {
+                    setJs(value);
+                  }}
+                  placeholder={"//hello"}
+                  value={js}
+                />
+              </div>
+            </div>
+          </Split>
+          <div
+            className={` ${
+              hideOutput ? `max-h-[0px]` : `max-h-full`
+            } h-full w-full relative  duration-200 `}
+          >
+            <motion.div
+              whileTap={{ scale: 0.9 }}
+              className={`absolute text-white right-0 ${
+                hideOutput ? `bottom-[100%]` : `top-0`
+              } bg-emerald-400 cursor-pointer p-2 rounded-lg text-xl
+                max-w-fit duration-200 `}
+              onClick={() => setHideOutput(!hideOutput)}
+            >
+              <HiChevronDoubleDown
+                className={`duration-300 ${
+                  hideOutput && "rotate-180"
+                } duration-150 text-primary`}
               />
-            </div>
-          </div>
-          <div className="h-full w-full px-[5px] flex flex-col">
-            <div className="w-full flex items-center justify-between ">
-              <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                <FaCss3Alt className="text-blue-400" />
-                <p className="text-[13px]">CSS</p>
-              </div>
-              <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                <IoIosSettings />
-                <FaChevronDown />
-              </div>
-            </div>
-            <div className="w-full relative flex-1">
-              <CodeMirror
-                extensions={[CSS(), color]}
-                theme={"dark"}
-                editable={sameOwner}
-                height="100%"
-                style={{ scrollbarColor: "green" }}
-                className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                onChange={(value, viewUpdate) => {
-                  setCss(value);
-                }}
-                value={css}
-              />
-            </div>
-          </div>
-          <div className="h-full w-full px-[5px] flex flex-col">
-            <div className="w-full flex items-center justify-between ">
-              <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
-                <DiJavascript className="text-yellow-400 " />
-                <p className="text-[13px]">JS</p>
-              </div>
-              <div className="flex  gap-2 items-center justify-center py-1 border-[.1px] rounded-sm px-1 bg-secondary cursor-pointer">
-                <IoIosSettings />
-                <FaChevronDown />
-              </div>
-            </div>
-            <div className="w-full relative flex-1">
-              <CodeMirror
-                extensions={[javascript({ snippets: true })]}
-                theme={"dark"}
-                editable={sameOwner}
-                height="100%"
-                style={{ scrollbarColor: "green" }}
-                className="absolute top-0 left-0 w-[100%] h-[100%] bg-black"
-                onChange={(value, viewUpdate) => {
-                  setJs(value);
-                }}
-                placeholder={"//hello"}
-                value={js}
-              />
+            </motion.div>
+
+            <div className={`min-h-full max-h-full w-full flex`}>
+              <motion.div
+                className={` min-h-full w-full bg-white  text-black duration-150 flex-1 `}
+              >
+                <iframe srcDoc={result} className="h-full w-full" />
+              </motion.div>
             </div>
           </div>
         </Split>
-        <motion.div className={`max-h-${hideOutput ? `[100px]` : `full`} w-full  relative bg-white duration-300`}>
-          <motion.div
-            whileTap={{ scale: 0.9 }}
-            className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
-            onClick={() => setHideOutput(!hideOutput)}
-          >
-            <HiChevronDoubleDown
-              className={`duration-300 ${
-                hideOutput && "rotate-180"
-              } duration-150`}
-            />
-          </motion.div>
-          <iframe srcDoc={result} className="h-full w-full" />
-        </motion.div>
-      </Split>
-    </div>
+      </div>
+    </>
   );
 };
 
 export default NewProject;
-
-/**
- *     <div className="max-w-full w-full h-full flex-1">
-          {/* <SplitPane split="horizontal">
-              <SplitPane defaultSize={50} minSize={"200px"}>
-
-                <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
-
-                </SplitPane>
-                <SplitPane split="vertical" minSize={"300px"} defaultSize={"33%"}>
-
-                </SplitPane>
-              </SplitPane>
-              {hideOutput ? (
-                <SplitPane minSize={"50px"} size={"30px"}>
-                  <div className="h-full w-full bg-white p-2 relative">
-                    <motion.div
-                      whileTap={{ scale: 0.9 }}
-                      className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
-                      onClick={() => setHideOutput(!hideOutput)}
-                    >
-                      <HiChevronDoubleDown
-                        className={`duration-300 ${
-                          hideOutput && "rotate-180"
-                        } duration-150`}
-                      />
-                    </motion.div>
-                    <iframe srcDoc={result} className="h-full w-full" />
-                  </div>
-                </SplitPane>
-              ) : (
-                <SplitPane minSize={"30px"}>
-                  <div className="h-full w-full bg-white relative">
-                    <motion.div
-                      whileTap={{ scale: 0.9 }}
-                      className={`absolute text-white right-0 top-0 bg-red-500 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg z-[100]`}
-                      onClick={() => setHideOutput(!hideOutput)}
-                    >
-                      <HiChevronDoubleDown
-                        className={`duration-300 ${
-                          hideOutput && "rotate-180"
-                        } duration-150`}
-                      />
-                    </motion.div>
-                    <iframe srcDoc={result} className="h-full w-full" />
-                  </div>
-                </SplitPane>
-              )}
-            </SplitPane>
-            </div>
- */
+{
+}

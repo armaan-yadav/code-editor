@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signUserOut } from "../utils/helper";
-import { removeUser } from "../redux/userSlice/userSlice";
+import { signUserOut } from "../../utils/helper";
+import { removeUser } from "../../redux/userSlice/userSlice";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { motion } from "framer-motion";
-import { fadeInOut } from "../animatons/index";
+import { fadeInOut } from "../../animatons/index";
 import { Link } from "react-router-dom";
 const UserProfile = ({}) => {
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);

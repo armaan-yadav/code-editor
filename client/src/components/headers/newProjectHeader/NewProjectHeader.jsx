@@ -3,7 +3,7 @@ import logo from "/assets/logo.svg";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { MdCheck, MdEdit } from "react-icons/md";
-import UserProfile from "./UserProfile";
+import UserProfile from "../../xothers/UserProfile";
 
 const NewProjectHeader = ({
   title,
