@@ -17,7 +17,7 @@ const NewProjectHeader = ({
   const [isEditing, setIsEditing] = useState(false);
 
   return (
-    <header className="text-white  min-h-[66px] h-[66px]  w-full bg-secondary flex justify-between items-center px-3">
+    <header className="text-white  min-h-[66px] h-[66px]  w-full bg-secondary flex justify-between items-center px-5">
       <div className="flex items-center ">
         <Link to={"/"}>
           <img src={logo} alt="" />

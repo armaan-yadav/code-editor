@@ -80,4 +80,42 @@ div[data-attribute="horizontal"][data-type="Resizer"]:hover {
   cursor: row-resize;
 }
 
+/* -------------------custom scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-500;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-700;
+}
+
+/* shimmer effect */
+.shimmer {
+  background: linear-gradient(286deg, #2f3038, #6b6b6bae, #707070ae);
+  background-size: 180% 180%;
+  animation: shimmerEffect 1.3s ease infinite;
+}
+
+@keyframes shimmerEffect {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

@@ -5,7 +5,7 @@ const Anchor = ({ isSideMenu, setIsSideMenu, style }) => {
     return (
         <motion.div
             whileTap={{ scale: 0.9 }}
-            className={`absolute text-white -right-6 top-2 bg-secondary cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg ${style}`}
+            className={`absolute text-white -right-6 top-2 bg-emerald-400 cursor-pointer text-xl p-1 rounded-tr-lg rounded-br-lg ${style}`}
             onClick={() => setIsSideMenu(!isSideMenu)}
         >
             <HiChevronDoubleLeft

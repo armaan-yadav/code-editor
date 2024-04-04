@@ -1,9 +1,9 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { db } from "../config/firebase.config";
+import { db } from "../../config/firebase.config";
 import NewProject from "./NewProject";
-import Spinner from "../components/xothers/Spinner";
+import Spinner from "../../components/xothers/Spinner";
 const ProjectWithId = () => {
   const { id } = useParams();
   const [projectData, setProjectData] = useState();

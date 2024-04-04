@@ -9,7 +9,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { html as HTML } from "@codemirror/lang-html";
 import { css as CSS } from "@codemirror/lang-css";
 import { color } from "@uiw/codemirror-extensions-color";
-import NewProjectHeader from "../components/headers/newProjectHeader/NewProjectHeader";
+import NewProjectHeader from "../../components/headers/newProjectHeader/NewProjectHeader";
 import { useSelector } from "react-redux";
 import Split from "react-split";
 import { LuExpand } from "react-icons/lu";
@@ -22,10 +22,10 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { db } from "../config/firebase.config";
+import { db } from "../../config/firebase.config";
 import { toast } from "react-toastify";
-import WebOutput from "../components/output/WebOutput";
-import Modal from "../components/modal/Modal";
+import WebOutput from "../../components/output/WebOutput";
+import Modal from "../../components/modal/Modal";
 import { useAnimate } from "framer-motion";
 const NewProject = ({ data, owner }) => {
   const [hideOutput, setHideOutput] = useState(false);
@@ -74,6 +74,10 @@ const NewProject = ({ data, owner }) => {
   }, [html, css, js]);
 
   const handleSave = async () => {
+    if (!user) {
+      toast.error("SignUp or LogIn first to save the project!");
+      return;
+    }
     const id = `${Date.now()}`;
     const _doc = {
       id,

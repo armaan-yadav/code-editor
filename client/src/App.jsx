@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./_pages/Home";
+import Home from "./_root/_pages/Home";
 import Auth from "./_auth/Auth";
 import { auth, db } from "./config/firebase.config";
-import {
-  collection,
-  doc,
-  onSnapshot,
-  orderBy,
-  query,
-  setDoc,
-} from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import Spinner from "./components/xothers/Spinner";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./redux/userSlice/userSlice";
-import NewProject from "./_pages/NewProject";
+import NewProject from "./_root/_pages/NewProject";
 import { ToastContainer } from "react-toastify";
-import { setProjects } from "./redux/userSlice/projectSlice";
-import { ProviderId } from "firebase/auth";
-import ProjectWithId from "./_pages/ProjectWithId";
+import ProjectWithId from "./_root/_pages/ProjectWithId";
+import RootLayout from "./_root/RootLayout";
+import Explore from "./_root/_pages/Explore";
+import Profile from "./_root/_pages/Profile";
 
 const App = () => {
   // console.log("Hello");
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+
   useEffect(() => {
     setIsLoading(true);
     const unsubscribe = auth.onAuthStateChanged((userCred) => {
@@ -44,17 +40,7 @@ const App = () => {
     //cleanup funciton
     return () => unsubscribe();
   }, []);
-  useEffect(() => {
-    const porjectQuery = query(
-      collection(db, "Projects"),
-      orderBy("id", "desc")
-    );
-    const unsubscribe = onSnapshot(porjectQuery, (querySnaps) => {
-      const projectList = querySnaps.docs.map((doc) => doc.data());
-      dispatch(setProjects(projectList));
-    });
-    return () => unsubscribe;
-  });
+
   return isLoading ? (
     <div className="flex items-center justify-center h-[100vh] w-screen ">
       <Spinner />
@@ -64,7 +50,11 @@ const App = () => {
       <ToastContainer position="bottom-right" />
       <div className="w-[100vw] h-[100vh] flex items-start justify-start overflow-hidden">
         <Routes>
-          <Route index path="/" element={<Home />} />
+          <Route element={<RootLayout />}>
+            <Route index path="/" element={<Home user={user} />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="/auth" element={<Auth />} />
           <Route
             path="/newProject"
