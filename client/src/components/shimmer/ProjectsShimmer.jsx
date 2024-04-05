@@ -5,8 +5,11 @@ const ProjectsShimmer = () => {
     <div className="w-full flex flex-wrap  items-center justify-center gap-12 py-3">
       {Array(4)
         .fill("")
-        .map((card) => (
-          <div className="h-[275px] md:w-[350px] w-full  flex flex-col relative z-40 group gap-1 ">
+        .map((card, index) => (
+          <div
+            className="h-[275px] md:w-[350px] w-full  flex flex-col relative z-40 group gap-1 "
+            key={index}
+          >
             <div className="w-full h-[80%]  overflow-x-hidden rounded-md shimmer"></div>
             <div className="flex items-center justify-start px-2 gap-2  h-[20%] rounded-b-md">
               <div className="h-[55px] rounded-md w-[50px] shimmer"></div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const ConsoleOutput = ({ js_edit, style }) => {
   const [displayCode, setDisplayCode] = useState("");
+
   useEffect(() => {
     let capturedOutput = "";
 
@@ -25,7 +26,7 @@ const ConsoleOutput = ({ js_edit, style }) => {
   }, [js_edit]);
   return (
     <div className={`${style}`}>
-      <pre> {displayCode} </pre>
+      <pre>{displayCode}</pre>
     </div>
   );
 };

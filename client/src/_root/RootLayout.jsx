@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const RootLayout = () => {
   const [isSideMenu, setIsSideMenu] = useState(false);
+  const user = useSelector((state) => state.user.user);
   return (
     <>
       <Sidebar isSideMenu={isSideMenu} setIsSideMenu={setIsSideMenu} />

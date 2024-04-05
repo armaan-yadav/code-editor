@@ -17,12 +17,19 @@ const UserProfile = ({}) => {
     <>
       <div className="flex h-full items-center justify-center gap-2 relative">
         {user ? (
-          <motion.p
-            whileHover={{ scale: 1.2 }}
-            className="bg-primaryText text-primary w-[50px] h-full rounded-md flex items-center justify-center py-1.5 text-3xl"
-          >
-            {getFirstLetter()}
-          </motion.p>
+          user.photoURL ? (
+            <img
+              src={user.photoURL}
+              className="w-[50px] h-full rounded-md object-cover"
+            />
+          ) : (
+            <motion.p
+              whileHover={{ scale: 1.2 }}
+              className="bg-primaryText text-primary w-[50px] h-full rounded-md flex items-center justify-center py-1.5 text-3xl"
+            >
+              {getFirstLetter()}
+            </motion.p>
+          )
         ) : (
           <Link to={"/auth"} className="h-full">
             <motion.div

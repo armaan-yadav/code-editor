@@ -13,7 +13,7 @@ import ProjectWithId from "./_root/_pages/ProjectWithId";
 import RootLayout from "./_root/RootLayout";
 import Explore from "./_root/_pages/Explore";
 import Profile from "./_root/_pages/Profile";
-
+import PrivateRoutes from "./_root/PrivateRoutes";
 const App = () => {
   // console.log("Hello");
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +23,7 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true);
     const unsubscribe = auth.onAuthStateChanged((userCred) => {
+      console.log(userCred);
       if (userCred) {
         setDoc(
           doc(db, "users", userCred?.uid),
@@ -36,7 +37,6 @@ const App = () => {
         setIsLoading(false);
       }
     });
-
     //cleanup funciton
     return () => unsubscribe();
   }, []);
@@ -50,20 +50,19 @@ const App = () => {
       <ToastContainer position="bottom-right" />
       <div className="w-[100vw] h-[100vh] flex items-start justify-start overflow-hidden">
         <Routes>
+          <Route path="/auth" element={<Auth />} />
+          {/* <Route element={<PrivateRoutes />}> */}
           <Route element={<RootLayout />}>
             <Route index path="/" element={<Home user={user} />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
-          <Route path="/auth" element={<Auth />} />
           <Route
             path="/newProject"
             element={<NewProject data={{}} editable={true} />}
           />
           <Route path="/project/:id" element={<ProjectWithId />} />
-
-          {/* set default path if no route matches */}
-          {/* <Route path='*' element={<Home />} /> */}
+          {/* </Route> */}
         </Routes>
       </div>
     </>

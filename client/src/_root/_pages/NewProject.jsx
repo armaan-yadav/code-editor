@@ -25,8 +25,10 @@ import {
 import { db } from "../../config/firebase.config";
 import { toast } from "react-toastify";
 import WebOutput from "../../components/output/WebOutput";
+import ConsoleOutput from "../../components/output/ConsoleOutput";
 import Modal from "../../components/modal/Modal";
 import { useAnimate } from "framer-motion";
+import { set } from "react-hook-form";
 const NewProject = ({ data, owner }) => {
   const [hideOutput, setHideOutput] = useState(false);
   const user = useSelector((state) => state.user.user);
@@ -128,6 +130,9 @@ const NewProject = ({ data, owner }) => {
           setShowModal={setShowModal}
           data={{ html, css, js }}
           setData={setModalData}
+          setCss={setCss}
+          setHtml={setHtml}
+          setJs={setJs}
           sameOwner={sameOwner}
           showModal={showModal}
           activeData={activeData}
@@ -251,6 +256,7 @@ const NewProject = ({ data, owner }) => {
               </div>
             </div>
           </Split>
+
           <WebOutput
             hideOutput={hideOutput}
             result={result}

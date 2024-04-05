@@ -14,6 +14,9 @@ const Modal = ({
   sameOwner,
   activeData,
   setActiveData,
+  setHtml,
+  setCss,
+  setJs,
 }) => {
   useEffect(() => {
     if (window.location.href.includes("newProject")) sameOwner = true;
@@ -45,7 +48,9 @@ const Modal = ({
             style={{ scrollbarColor: "green" }}
             className="h-full w-full bg-black overscroll-auto"
             onChange={(value, viewUpdate) => {
-              setData(value);
+              activeData == "html" && setHtml(value);
+              activeData == "css" && setCss(value);
+              activeData == "js" && setJs(value);
             }}
             value={data[`${activeData}`]}
           />
