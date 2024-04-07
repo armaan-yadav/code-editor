@@ -65,9 +65,10 @@ export const signUserOut = async () => {
   await signOut(auth).catch((e) => console.log(e));
 };
 
-export const updateUserPhoto = (profileUrl) => {
-  updateProfile(auth.currentUser, {
-    photoURL: profileUrl,
+export const updateUserProfile = async (displayName, photoURL) => {
+  await updateProfile(auth.currentUser, {
+    displayName,
+    photoURL,
   }).then(() => {
     toast.success("Profile photo updated successfully");
   });
@@ -77,12 +78,5 @@ export const removeUserPhoto = () => {
     photoURL: null,
   }).then(() => {
     toast.success("Profile photo removed successfully");
-  });
-};
-export const updateUserName = (name) => {
-  updateProfile(auth.currentUser, {
-    displayName: name,
-  }).then(() => {
-    toast.success("Name updated successfully");
   });
 };

@@ -23,7 +23,6 @@ const App = () => {
   useEffect(() => {
     setIsLoading(true);
     const unsubscribe = auth.onAuthStateChanged((userCred) => {
-      console.log(userCred);
       if (userCred) {
         setDoc(
           doc(db, "users", userCred?.uid),
