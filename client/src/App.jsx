@@ -47,7 +47,7 @@ const App = () => {
   ) : (
     <>
       <ToastContainer position="bottom-right" />
-      <div className="w-[100vw] h-[100vh] flex items-start justify-start overflow-hidden">
+      <div className="w-[100vw] h-[100vh] flex items-start justify-start overflow-hidden ">
         <Routes>
           <Route path="/auth" element={<Auth />} />
           {/* <Route element={<PrivateRoutes />}> */}

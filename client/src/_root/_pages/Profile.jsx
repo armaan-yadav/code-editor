@@ -10,11 +10,11 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   return (
     <div className="text-white h-full w-full  flex items-center justify-center">
-      <div className="w-[75%] h-full  flex">
-        <div className="w-[40%]  h-full">
+      <div className="w-[75%] h-full  flex md:flex-row flex-col  items-center justify-center max-sm:gap-[3rem]">
+        <div className="w-full md:w-[40%]  md:h-full  ">
           <ImageUpload user={user} setPhotoURL={setPhotoURL} />
         </div>
-        <div className="w-[60%] h-full  flex items-center px-2 flex-col justify-center relative">
+        <div className="w-full md:w-[60%] md:h-full  flex items-center px-2 flex-col justify-center relative">
           <div className="w-full ">
             <label htmlFor="name">Diplay Name</label>
             <input
@@ -25,7 +25,7 @@ const Profile = () => {
             />
           </div>
           <button
-            className="absolute right-0 bottom-10 bg-emerald-400 hover:bg-emerald-500 px-5 py-2 rounded-md duration-200"
+            className="absolute right-0 -bottom-[5rem] md:bottom-10 bg-emerald-400 hover:bg-emerald-500 px-5 py-2 rounded-md duration-200"
             onClick={() => {
               updateUserProfile(name, photoURL);
             }}

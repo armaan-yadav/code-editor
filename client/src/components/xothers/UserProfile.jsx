@@ -6,6 +6,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import { fadeInOut } from "../../animatons/index";
 import { Link } from "react-router-dom";
+import { FaCaretDown } from "react-icons/fa";
 const UserProfile = ({}) => {
   const [showLogoutMenu, setShowLogoutMenu] = useState(false);
   const user = useSelector((state) => state.user.user);
@@ -15,7 +16,7 @@ const UserProfile = ({}) => {
   };
   return (
     <>
-      <div className="flex h-full items-center justify-center gap-2 relative">
+      <div className="flex h-full items-center justify-center gap-2 relative ">
         {user ? (
           user.photoURL ? (
             <img
@@ -40,8 +41,8 @@ const UserProfile = ({}) => {
             </motion.div>
           </Link>
         )}
-        <RiArrowDropDownLine
-          className={`text-[40px]  text-white ${
+        <FaCaretDown
+          className={`h-full px-1 text-[40px] cursor-pointer  text-white ${
             showLogoutMenu && `rotate-180`
           } duration-200 bg-secondary rounded-lg`}
           onClick={() => {
