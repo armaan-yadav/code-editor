@@ -47,7 +47,9 @@ const Explore = () => {
       )}
     </div>
   ) : (
-    <div>hehe</div>
+    <div className="text-white h-full w-full  flex items-center justify-center">
+      sign up karo
+    </div>
   );
 };
 

@@ -42,9 +42,9 @@ const UserProfile = ({}) => {
           </Link>
         )}
         <FaCaretDown
-          className={`h-full px-1 text-[40px] cursor-pointer  text-white ${
+          className={`h-full w-[30px] px-1 max-sm:hidden   cursor-pointer  text-white ${
             showLogoutMenu && `rotate-180`
-          } duration-200 bg-secondary rounded-lg`}
+          } duration-200  rounded-lg`}
           onClick={() => {
             setShowLogoutMenu(!showLogoutMenu);
           }}

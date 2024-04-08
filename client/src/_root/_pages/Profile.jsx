@@ -8,7 +8,7 @@ const Profile = () => {
   const [name, setName] = useState(user?.displayName);
   const [photoURL, setPhotoURL] = useState(null);
   const [loading, setLoading] = useState(false);
-  return (
+  return user ? (
     <div className="text-white h-full w-full  flex items-center justify-center">
       <div className="w-[75%] h-full  flex md:flex-row flex-col  items-center justify-center max-sm:gap-[3rem]">
         <div className="w-full md:w-[40%]  md:h-full  ">
@@ -34,6 +34,10 @@ const Profile = () => {
           </button>
         </div>
       </div>
+    </div>
+  ) : (
+    <div className="text-white h-full w-full  flex items-center justify-center">
+      sign up karo
     </div>
   );
 };

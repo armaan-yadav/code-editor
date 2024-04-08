@@ -13,7 +13,7 @@ const HomeHeader = ({ user }) => {
           <Link to={"/auth"} className="h-full">
             <motion.div
               whileTap={{ scale: 0.8 }}
-              className="text-white bg-emerald-500 hover:bg-emerald-700 duration-200 px-3 h-full flex items-center rounded-md"
+              className="hidden md:flex text-white bg-emerald-500 hover:bg-emerald-700 duration-200 px-3 h-full items-center rounded-md"
             >
               SignUp
             </motion.div>

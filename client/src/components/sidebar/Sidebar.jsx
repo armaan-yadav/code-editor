@@ -11,8 +11,11 @@ import { TbSourceCode, TbWorldWww } from "react-icons/tb";
 import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaGithubAlt } from "react-icons/fa6";
+import { signUserOut } from "../../utils/helper";
+import { useDispatch } from "react-redux";
 // flex-[.7] xl:flex-[.2]
 const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   return (
     <div
@@ -60,6 +63,22 @@ const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
         >
           <GiPlagueDoctorProfile className="text-2xl" /> Profile
         </Link>
+
+        {user ? (
+          <button
+            className="px-1 border-b-[1px] bg-emerald-400 rounded-md hover:bg-emerald-500 hover:text-white  duration-200 "
+            onClick={() => {
+              signUserOut();
+              dispatch(removeUser());
+            }}
+          >
+            Sign Out
+          </button>
+        ) : (
+          <button className="px-1 border-b-[1px] bg-emerald-400 rounded-md hover:bg-emerald-500 hover:text-white  duration-200 ">
+            <Link to={"/auth"}>Sign Up</Link>
+          </button>
+        )}
       </div>
       <div className="w-full flex items-center justify-center flex-col py-1 gap-4 overflow-hidden">
         <Link
