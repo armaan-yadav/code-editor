@@ -119,3 +119,25 @@ div[data-attribute="horizontal"][data-type="Resizer"]:hover {
     background-position: 0% 50%;
   }
 }
+
+.mobile-scroll::-webkit-scrollbar {
+  /* width: 8px; */
+  left: 0;
+  position: absolute;
+  bottom: 0;
+  height: 10px;
+  width: 100%;
+  background: red;
+}
+
+.mobile-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+
+}
+
+.mobile-scroll::-webkit-scrollbar-thumb {
+  @apply bg-gray-500;
+}
+.mobile-scroll::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-700;
+}

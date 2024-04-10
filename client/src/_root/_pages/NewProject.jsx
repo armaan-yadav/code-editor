@@ -155,11 +155,12 @@ const NewProject = ({ data, owner }) => {
 
         <Split className="w-full  h-full flex flex-col " direction="vertical">
           <Split
-            className=" h-full w-full md:w-[100vw] flex-1 bg-pink-900 flex flex-col"
+            className="h-full w-full md:w-[100vw] flex-1 bg-pink-900 split overflow-y-scroll mobile-scroll"
             minSize={300}
-            direction={`${screen.width > 480 ? `vertical` : `horizontal`}`}
+            // direction={`${screen.width > 480 ? `vertical` : `horizontal`}`}
+            direction="horizontal"
           >
-            <div className="h-full min-w-full md:w-full px-[5px] flex flex-col ">
+            <div className="h-full max-sm:min-w-full  px-[5px] flex flex-col ">
               <div className="w-full flex items-center justify-between ">
                 <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
                   <FaHtml5 className="text-red-400" />
@@ -192,7 +193,7 @@ const NewProject = ({ data, owner }) => {
                 />
               </div>
             </div>
-            <div className="h-full min-w-full md:w-full px-[5px] flex flex-col ">
+            <div className="h-full max-sm:min-w-full  px-[5px] flex flex-col ">
               <div className="w-full flex items-center justify-between ">
                 <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
                   <FaCss3Alt className="text-blue-400" />
@@ -225,7 +226,7 @@ const NewProject = ({ data, owner }) => {
                 />
               </div>
             </div>
-            <div className="h-full min-w-full md:w-full px-[5px] flex flex-col">
+            <div className="h-full max-sm:min-w-full  px-[5px] flex flex-col">
               <div className="w-full flex items-center justify-between ">
                 <div className="flex items-center gap-1 bg-secondary px-2 py-1 rounded-sm border-t-2 border-gray-200">
                   <DiJavascript className="text-yellow-400 " />
