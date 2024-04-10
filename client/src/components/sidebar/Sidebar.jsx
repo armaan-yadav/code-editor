@@ -12,8 +12,8 @@ import { FaGithub } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaGithubAlt } from "react-icons/fa6";
 import { signUserOut } from "../../utils/helper";
+import { removeUser } from "../../redux/userSlice/userSlice";
 import { useDispatch } from "react-redux";
-// flex-[.7] xl:flex-[.2]
 const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -66,16 +66,17 @@ const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
 
         {user ? (
           <button
-            className="px-1 border-b-[1px] bg-emerald-400 rounded-md hover:bg-emerald-500 hover:text-white  duration-200 "
+            className="md:hidden px-1 border-b-[1px] bg-emerald-400 rounded-md hover:bg-emerald-500 hover:text-white  duration-200 "
             onClick={() => {
               signUserOut();
               dispatch(removeUser());
+              console.log("first");
             }}
           >
             Sign Out
           </button>
         ) : (
-          <button className="px-1 border-b-[1px] bg-emerald-400 rounded-md hover:bg-emerald-500 hover:text-white  duration-200 ">
+          <button className="md:hidden px-1 border-b-[1px] bg-emerald-400 rounded-md hover:bg-emerald-500 hover:text-white  duration-200 ">
             <Link to={"/auth"}>Sign Up</Link>
           </button>
         )}

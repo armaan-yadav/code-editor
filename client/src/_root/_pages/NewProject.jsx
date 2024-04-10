@@ -157,7 +157,7 @@ const NewProject = ({ data, owner }) => {
           <Split
             className=" h-full w-full md:w-[100vw] flex-1 bg-pink-900 flex flex-col"
             minSize={300}
-            direction="horizontal"
+            direction={`${screen.width > 480 ? `vertical` : `horizontal`}`}
           >
             <div className="h-full min-w-full md:w-full px-[5px] flex flex-col ">
               <div className="w-full flex items-center justify-between ">

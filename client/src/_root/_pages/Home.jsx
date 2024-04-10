@@ -57,7 +57,7 @@ const Home = () => {
         <ProjectsShimmer />
       ) : (
         <div className="text-white w-full h-full flex items-center justify-center">
-          sign up karo
+          sign up guruji
         </div>
       )}
     </div>

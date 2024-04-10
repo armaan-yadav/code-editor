@@ -56,13 +56,11 @@ const UserProfile = ({}) => {
             className="absolute top-[100%] right-0 text-primaryText w-[150%] flex flex-col bg-secondary  gap-1.5 rounded-lg overflow-hidden py-1 z-[100]"
           >
             <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">
-              Projects
+              <Link to={"/"}> Projects</Link>
             </button>
+
             <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">
-              Collections
-            </button>
-            <button className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200">
-              Profile
+              <Link to={"/profile"}>Profile</Link>
             </button>
             <button
               className="px-1 border-b-[1px]  hover:bg-emerald-500 hover:text-white  duration-200 "
