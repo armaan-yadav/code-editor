@@ -13,7 +13,10 @@ import { FaLinkedinIn } from "react-icons/fa";
 import { FaGithubAlt } from "react-icons/fa6";
 import { signUserOut } from "../../utils/helper";
 import { removeUser } from "../../redux/userSlice/userSlice";
+import parse from "html-react-parser";
 import { useDispatch } from "react-redux";
+import { SideBarLinks } from "../../utils/constants";
+
 const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -42,6 +45,16 @@ const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
         >
           <p className="text-gray-400 group-hover:text-gray-200 cursor-pointer flex items-center gap-2">
             New Project <IoCreateOutline />
+          </p>
+        </Link>
+
+        <Link
+          to={"/live-coding"}
+          className="w-full text-center py-2 border-gray-200 hover:border-2 rounded-md duration-200
+                    group flex items-center justify-center text-xl max-sm:mt-4"
+        >
+          <p className="text-gray-400 group-hover:text-gray-200 cursor-pointer flex items-center gap-2">
+            Live Coding
           </p>
         </Link>
 
@@ -81,6 +94,7 @@ const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
           </button>
         )}
       </div>
+
       <div className="w-full flex items-center justify-center flex-col py-1 gap-4 overflow-hidden">
         <Link
           to={"https://github.com/armaan-yadav/codepencil"}

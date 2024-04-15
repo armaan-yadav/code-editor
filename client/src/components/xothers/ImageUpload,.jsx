@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { removeUserPhoto, updateUserProfile } from "../../utils/helper";
 
 const ImageUpload = ({ user, setPhotoURL }) => {
+  const [currentImgUrl, setCurrentImgUrl] = useState(user?.photoURL);
   const [img, setImg] = useState(null);
   const [progress, setProgress] = useState("0");
   const uploadImage = async () => {
@@ -34,6 +35,7 @@ const ImageUpload = ({ user, setPhotoURL }) => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           console.log("File available at", downloadURL);
           setPhotoURL(downloadURL);
+          setCurrentImgUrl(downloadURL);
         });
       }
     );
@@ -41,8 +43,8 @@ const ImageUpload = ({ user, setPhotoURL }) => {
 
   return (
     <div className="w-full h-full flex items-center justify-center flex-col gap-5 px-2 ">
-      {user?.photoURL ? (
-        <img src={user.photoURL} />
+      {currentImgUrl ? (
+        <img src={currentImgUrl || user?.photoURL} />
       ) : (
         <p className="bg-primaryText text-primary w-full h-[200px]  rounded-md flex items-center justify-center py-1.5 text-[5rem]">
           {user?.displayName[0]}
@@ -52,6 +54,7 @@ const ImageUpload = ({ user, setPhotoURL }) => {
         <button
           className="bg-red-400 py-2 hover:bg-red-500 duration-200 rounded-md w-full text-sm"
           onClick={() => {
+            setCurrentImgUrl(null);
             removeUserPhoto();
           }}
         >

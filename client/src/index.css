@@ -3,6 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.flexC {
+  @apply flex items-center justify-center;
+}
+
 body {
   background: #131417;
   font-family: "Poppins", sans-serif;

@@ -17,7 +17,7 @@ const githubProvider = new GithubAuthProvider();
 export const signInWithGoogle = async () => {
   await signInWithRedirect(auth, googleProvider).then((userCredentials) => {
     window.location.reload();
-    console.log("first")
+    console.log("first");
     return 200;
   });
 };
@@ -66,18 +66,19 @@ export const signUserOut = async () => {
   await signOut(auth).catch((e) => console.log(e));
 };
 
-export const updateUserProfile = async (displayName, photoURL) => {
-  await updateProfile(auth.currentUser, {
-    displayName,
-    photoURL,
-  }).then(() => {
-    toast.success("Profile photo updated successfully");
-  });
+export const updateUserProfile = (displayName, photoURL) => {
+  console.log("updating");
+  console.log(auth.currentUser);
+  updateProfile(auth.currentUser, {
+    displayName: displayName,
+    photoURL: photoURL,
+  }).then(() => {});
+  toast.success("Profile  updated successfully");
 };
 export const removeUserPhoto = () => {
   updateProfile(auth.currentUser, {
-    photoURL: null,
-  }).then(() => {
-    toast.success("Profile photo removed successfully");
-  });
+    photoURL: "",
+  }).then(() => {});
+  toast.success("Profile photo removed successfully");
+  console.log(auth.currentUser);
 };

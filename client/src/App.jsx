@@ -14,8 +14,10 @@ import RootLayout from "./_root/RootLayout";
 import Explore from "./_root/_pages/Explore";
 import Profile from "./_root/_pages/Profile";
 import PrivateRoutes from "./_root/PrivateRoutes";
+import LiveCoding from "./_root/_pages/LiveCoding";
+import LiveCodeEditor from "./_root/_pages/LiveCodeEditor";
+
 const App = () => {
-  // console.log("Hello");
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
@@ -46,13 +48,15 @@ const App = () => {
     </div>
   ) : (
     <>
-      <ToastContainer position="bottom-right" />
+      <ToastContainer position="bottom-right" autoClose={1750} />
       <div className="w-[100vw] h-[100vh] flex items-start justify-start overflow-hidden ">
         <Routes>
           <Route path="/auth" element={<Auth />} />
-          <Route element={<PrivateRoutes />}>
+          {/* <Route element={<PrivateRoutes />}> */}
           <Route element={<RootLayout />}>
             <Route index path="/" element={<Home user={user} />} />
+            <Route path="/live-coding" element={<LiveCoding />} />
+            <Route path="/live-coding/:roomId" element={<LiveCodeEditor />} />
             <Route path="/explore" element={<Explore />} />
             <Route path="/profile" element={<Profile />} />
           </Route>
@@ -61,7 +65,7 @@ const App = () => {
             element={<NewProject data={{}} editable={true} />}
           />
           <Route path="/project/:id" element={<ProjectWithId />} />
-          </Route>
+          {/* </Route> */}
         </Routes>
       </div>
     </>
