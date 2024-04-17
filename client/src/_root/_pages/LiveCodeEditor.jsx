@@ -73,14 +73,14 @@ const LiveCodeEditor = () => {
     };
   }, []);
   return (
-    <div className="h-full w-full flex gap-2 pl-10 text-white">
-      <div className="h-full  w-[300px] flex flex-col gap-8 ">
-        <div className="w-full flexC flex-col text-lg font-semibold">
+    <div className="h-full w-full flex gap-2 pl-10 text-white overflow-hidden max-sm:flex-col  ">
+      <div className="h-full  w-[300px] flex flex-col gap-8 max-sm:gap-2  max-sm:w-full max-sm:px-2 max-sm:h-[200px]">
+        <div className="w-full flexC flex-col text-lg font-semibold max-sm:flex-row max-sm:justify-between max-sm:text-xl">
           <img src={logo} alt="logo" />
           Live Editor
         </div>
-        <div className="flex flex-col gap-2 h-full">
-          <div className="flex-1 flex flex-col gap-3">
+        <div className="flex flex-col gap-2 flex-1 ">
+          <div className="flex-1 max-w-flex-1 flex md:flex-col gap-3 overflow-y-auto">
             <div className="w-full max-sm:hidden">
               <div className="bg-white h-[1px] w-full my-2"></div>
               Connected Users :
@@ -89,19 +89,22 @@ const LiveCodeEditor = () => {
               <UserCard username={user?.username} key={index} />
             ))}
           </div>
-          <CopyToClipboard text={roomId} onCopy={onCopy}>
-            <button className="w-full bg-emerald-400 py-2 rounded-md hover:bg-emerald-500 active:bg-emerald-500 duration-200">
-              Copy Room Id
+          <div className="flex gap-3 md:flex-col ">
+            {" "}
+            <CopyToClipboard text={roomId} onCopy={onCopy}>
+              <button className="w-full bg-emerald-400 py-2 rounded-md hover:bg-emerald-500 active:bg-emerald-500 duration-200">
+                Copy Room Id
+              </button>
+            </CopyToClipboard>
+            <button
+              className="w-full bg-red-400 py-2 rounded-md hover:bg-red-500 active:bg-red-500 duration-200"
+              onClick={() => {
+                navigate("/live-coding");
+              }}
+            >
+              Leave Room
             </button>
-          </CopyToClipboard>
-          <button
-            className="w-full bg-red-400 py-2 rounded-md hover:bg-red-500 active:bg-red-500 duration-200"
-            onClick={() => {
-              navigate("/live-coding");
-            }}
-          >
-            Leave Room
-          </button>
+          </div>
         </div>
       </div>
       <div className="h-full w-full bg-red-900">

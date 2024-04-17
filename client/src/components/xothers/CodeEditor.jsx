@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/theme/dracula.css";
 import "codemirror/addon/edit/closetag";
@@ -8,6 +8,7 @@ import CodeMirror from "codemirror";
 
 function CodeEditor({ socketRef, roomId, onCodeChange }) {
   const editorRef = useRef(null);
+  const [output, setOutput] = useState("");
   useEffect(() => {
     const init = async () => {
       const editor = CodeMirror.fromTextArea(
@@ -58,8 +59,10 @@ function CodeEditor({ socketRef, roomId, onCodeChange }) {
   }, [socketRef.current]);
 
   return (
-    <div style={{ height: "100%" }}>
-      <textarea id="realtimeEditor"></textarea>
+    <div className="h-full w-full relative">
+      <div className="h-[100%] ">
+        <textarea id="realtimeEditor"></textarea>
+      </div>
     </div>
   );
 }

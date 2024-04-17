@@ -41,6 +41,9 @@ const ImageUpload = ({ user, setPhotoURL }) => {
     );
   };
 
+  useEffect(() => {
+    if (img) uploadImage();
+  }, [img]);
   return (
     <div className="w-full h-full flex items-center justify-center flex-col gap-5 px-2 ">
       {currentImgUrl ? (
@@ -70,14 +73,14 @@ const ImageUpload = ({ user, setPhotoURL }) => {
         />
         {img && (
           <>
-            <button
+            {/* <button
               className="bg-emerald-400 py-1 rounded-md my-2 hover:bg-emerald-500 duration-200"
               onClick={() => {
                 uploadImage();
               }}
             >
               Upload
-            </button>
+            </button> */}
             <div className="h-[4px] w-full bg-white my-2">
               <div
                 className={`h-full w-[${parseInt(

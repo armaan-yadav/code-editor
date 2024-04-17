@@ -20,6 +20,12 @@ import { SideBarLinks } from "../../utils/constants";
 const Sidebar = ({ isSideMenu, setIsSideMenu }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsSideMenu(false);
+    }, 1000);
+  }, []);
   return (
     <div
       className={`  min-h-screen max-h-screen bg-secondary  ${
