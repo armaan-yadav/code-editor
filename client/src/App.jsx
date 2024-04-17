@@ -52,7 +52,7 @@ const App = () => {
       <div className="w-[100vw] h-[100vh] flex items-start justify-start overflow-hidden ">
         <Routes>
           <Route path="/auth" element={<Auth />} />
-          {/* <Route element={<PrivateRoutes />}> */}
+          <Route element={<PrivateRoutes />}>
           <Route element={<RootLayout />}>
             <Route index path="/" element={<Home user={user} />} />
             <Route path="/live-coding" element={<LiveCoding />} />
@@ -65,7 +65,7 @@ const App = () => {
             element={<NewProject data={{}} editable={true} />}
           />
           <Route path="/project/:id" element={<ProjectWithId />} />
-          {/* </Route> */}
+          </Route>
         </Routes>
       </div>
     </>
